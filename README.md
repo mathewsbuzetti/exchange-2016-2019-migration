@@ -146,7 +146,7 @@ Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAD
 
 ⚠️ **IMPORTANTE**: 
 - O nome da organização não pode ser alterado depois de definido
-- Use um nome sem espaços e caracteres especiais
+- Use um nome sem espaços
 
 ### 🛠️ 4.3. Preparar Todos os Domínios
 **Descrição**: Prepara todos os domínios da floresta para o Exchange 2019.
