@@ -4,7 +4,17 @@
 [![Status](https://img.shields.io/badge/Status-Production-green)]()
 
 ## 🎯 Objetivo
-Este guia fornece instruções detalhadas para migração do Microsoft Exchange Server 2016 para o Exchange Server 2019, incluindo todas as etapas de preparação, instalação, configuração e pós-migração. O documento foi elaborado para garantir uma migração segura e eficiente, minimizando o tempo de inatividade e potenciais problemas.
+Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Server 2016 para o Exchange Server 2019. O processo de migração é crítico e requer planejamento cuidadoso para garantir:
+- Mínima interrupção dos serviços de email
+- Preservação integral dos dados dos usuários
+- Transição suave entre versões do Exchange
+
+## 🚨 Avisos Importantes Antes de Iniciar
+> **⚠️ ATENÇÃO**: 
+> - Sempre faça backup completo de todo o ambiente antes de iniciar
+> - Realize a migração em horário de baixo impacto
+> - Tenha um plano de rollback detalhado
+> - Comunique antecipadamente todos os usuários sobre a migração
 
 ## 📋 Índice
 - [Pré-requisitos](#-pré-requisitos)
