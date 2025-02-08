@@ -3,6 +3,15 @@
 [![Azure](https://img.shields.io/badge/Microsoft-Exchange_Server-orange)]()
 [![Status](https://img.shields.io/badge/Status-Production-green)]()
 
+## 📋 Metadados
+Metadado | Descrição
+---------|------------
+Título | Manual de Instalação, Configuração e Migração do Exchange Server 2016 para 2019
+Assunto | Microsoft Exchange Server
+Data | 08/02/2025
+Autor | Mathews Buzetti
+Tags | windows-server, exchange-migration, infrastructure-as-code
+
 ## 🎯 Objetivo
 Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Server 2016 para o Exchange Server 2019. O processo de migração é crítico e requer planejamento cuidadoso para garantir:
 - Mínima interrupção dos serviços de email
