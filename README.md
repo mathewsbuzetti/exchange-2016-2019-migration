@@ -342,7 +342,7 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 ```powershell
 Set-MailboxDatabase "Mailbox Database 0582773279" –Name "DB01-2019"
 ```
-> **📝 NOTA IMPORTANTE**: 
+>  **⚠️ ATENÇÃO**: 
 > - O nome "Mailbox Database 0582773279" é APENAS UM EXEMPLO.
 > - SUBSTITUA pelo nome real do banco de dados identificado no passo de verificação (Get-MailboxDatabase).
 > - "DB01-2019" é um nome sugerido. Escolha um nome significativo para sua organização.
