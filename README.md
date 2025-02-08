@@ -170,7 +170,7 @@ Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAllDomains
 - Teste o acesso ao ECP (Exchange Control Panel)
 - Verifique os serviços do Exchange
 
-# 🔧 Configuração MAPI over HTTP
+## 🔧 Configuração MAPI over HTTP
 
 **Descrição**: A configuração do MAPI over HTTP é necessária para garantir a conectividade adequada dos clientes Outlook com o servidor Exchange. Este procedimento deve ser realizado no servidor Exchange antigo (2016) antes de prosseguir com a instalação do Exchange 2019.
 
