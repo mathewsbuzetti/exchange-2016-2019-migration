@@ -13,6 +13,24 @@ Metadado | Descrição
 | **Autor** | Mathews Buzetti
 | **Tags** | `exchange-server`, `email-migration`, `windows-server`, `active-directory`, `infrastructure-migration`
 
+## 📋 Índice
+
+1. [Metadados](#-metadados)
+2. [Objetivo](#-objetivo)
+3. [Avisos Importantes Antes de Iniciar](#-avisos-importantes-antes-de-iniciar)
+4. [Pré-requisitos](#-pré-requisitos)
+5. [Instalação de Recursos no Windows Server](#-instalação-de-recursos-no-windows-server)
+6. [Download do Exchange](#-download-do-exchange)
+7. [Preparação do Active Directory](#-preparação-do-active-directory)
+8. [Instalação do Exchange](#-instalação-do-exchange)
+9. [Verificação de Avisos MAPI](#-verificação-de-avisos-mapi)
+10. [Configuração de URLs](#-configuração-de-urls)
+11. [Certificados SSL](#-certificados-ssl)
+12. [Configuração de Armazenamento](#-configuração-de-armazenamento)
+13. [Configuração DNS](#-configuração-dns)
+14. [Migração](#-migração)
+15. [Versionamento](#-versionamento)
+
 ## 🎯 Objetivo
 Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Server 2016 para o Exchange Server 2019. O processo de migração é crítico e requer planejamento cuidadoso para garantir:
 - Mínima interrupção dos serviços de email
@@ -25,19 +43,6 @@ Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Ser
 > - Realize a migração em horário de baixo impacto
 > - Tenha um plano de rollback detalhado
 > - Comunique antecipadamente todos os usuários sobre a migração
-
-## 📋 Índice
-- [Pré-requisitos](#-pré-requisitos)
-- [Instalação do Windows Server](#-instalação-do-windows-server)
-- [Download do Exchange](#-download-do-exchange)
-- [Preparação do Active Directory](#-preparação-do-active-directory)
-- [Instalação do Exchange](#-instalação-do-exchange)
-- [Configuração de URLs](#-configuração-de-urls)
-- [Certificados SSL](#-certificados-ssl)
-- [Configuração de Armazenamento](#-configuração-de-armazenamento)
-- [Configuração DNS](#-configuração-dns)
-- [Migração](#-migração)
-- [Pós-Migração](#-pós-migração)
 
 ## 💻 Pré-requisitos
 
