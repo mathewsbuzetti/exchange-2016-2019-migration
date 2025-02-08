@@ -172,60 +172,57 @@ Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAllDomains
 
 # 🔧 Configuração MAPI over HTTP
 
-## 📋 Visão Geral
-A configuração do MAPI over HTTP é crucial para garantir a conectividade adequada dos clientes Outlook com o servidor Exchange. Esta seção detalha os passos necessários para configurar corretamente o MAPI over HTTP no ambiente Exchange.
+**Descrição**: A configuração do MAPI over HTTP é necessária para garantir a conectividade adequada dos clientes Outlook com o servidor Exchange. Este procedimento deve ser realizado no servidor Exchange antigo (2016) antes de prosseguir com a instalação do Exchange 2019.
 
-## ⚠️ Nota Importante
-Estas configurações devem ser realizadas no servidor Exchange existente (antigo) **antes** de prosseguir com a instalação do novo servidor Exchange 2019. Isso garante que as configurações sejam aplicadas a toda a organização Exchange.
+## 1. Verificação de Avisos MAPI
+Se você encontrar avisos relacionados ao MAPI over HTTP durante a instalação, siga estas etapas no servidor Exchange antigo:
 
-## 🔄 Procedimento de Configuração
+### 1.1. Preparação
+Abra o Exchange Management Shell com privilégios de administrador no servidor Exchange antigo (por exemplo, Exchange 2016).
 
-### 1. Verificação Inicial
-No servidor Exchange antigo (ex: Exchange 2016):
-1. Abra o Exchange Management Shell como administrador
-2. Execute o comando para verificar a configuração atual:
+### 1.2. Verificação do Ambiente
+Execute os seguintes comandos na ordem especificada:
+
+**Mostrar informações de configuração do ambiente**:
 ```powershell
 Get-OutlookAnywhere | Format-List
 ```
 
-### 2. Verificação do Status MAPI
-Verifique se o MAPI está habilitado:
+**Verificar se o MAPI está habilitado**:
 ```powershell
 Get-OrganizationConfig | Format-List *mapihttpenabled
 ```
 
-### 3. Configuração do Diretório Virtual
-**Descrição**: Por padrão, o Exchange cria um diretório virtual para MAPI sobre HTTP. É necessário configurar as URLs internas e externas.
+### 1.3. Configuração do Diretório Virtual
+Por padrão, o Exchange cria um diretório virtual para MAPI sobre HTTP. Use o cmdlet Set-MapiVirtualDirectory para configurá-lo:
 
-**Procedimento**:
 ```powershell
-Set-MapiVirtualDirectory -Identity "<NomeDoSeuServidor>\mapi (Default Web Site)" `
-                        -InternalUrl https://<SeuDominio.com>/mapi `
-                        -IISAuthenticationMethods Negotiate
+Set-MapiVirtualDirectory -Identity "<NomeDoSeuServidor>\mapi (Default Web Site)" -InternalUrl https://<SeuDominio.com>/mapi -IISAuthenticationMethods Negotiate
 ```
 
-**Parâmetros importantes**:
-- `<NomeDoSeuServidor>`: Nome do seu servidor Exchange
-- `<SeuDominio.com>`: Nome de domínio completo (FQDN) do seu servidor
-- `IISAuthenticationMethods`: Define o método de autenticação
+**Observações sobre o comando**:
+- Substitua `<NomeDoSeuServidor>` pelo nome do seu servidor Exchange
+- Substitua `<SeuDominio.com>` pelo nome de domínio completo (FQDN) do seu servidor
 
-### 4. Habilitação do MAPI
-Habilite as conexões MAPI sobre HTTP para toda a organização:
+### 1.4. Habilitação do MAPI
+Execute o comando para habilitar conexões MAPI sobre HTTP para toda a organização:
+
 ```powershell
 Set-OrganizationConfig -MapiHttpEnabled $true
 ```
 
-### 5. Verificação Final
+### 1.5. Verificação Final
 Confirme se o MAPI foi ativado corretamente:
+
 ```powershell
 Get-OrganizationConfig | Format-List *mapihttpenabled
 ```
 
-## 📝 Próximos Passos
-Após confirmar que todas as configurações foram aplicadas corretamente:
+## 2. Próximos Passos
+Após realizar todas as configurações no servidor Exchange antigo:
 1. Retorne ao novo servidor
 2. Continue com a instalação do Exchange Server 2019
-3. Verifique os logs de instalação para garantir que não há avisos relacionados ao MAPI
+3. Monitore os logs de instalação
 
 ## 🌐 Configuração de URLs
 
