@@ -13,19 +13,6 @@ Metadado | Descrição
 | **Autor** | Mathews Buzetti
 | **Tags** | `exchange-server`, `email-migration`, `windows-server`, `active-directory`, `infrastructure-migration`
 
-## 📋 Índice
-- [Pré-requisitos](#-pré-requisitos)
-- [Instalação do Windows Server](#-instalação-do-windows-server)
-- [Download do Exchange](#-download-do-exchange)
-- [Preparação do Active Directory](#-preparação-do-active-directory)
-- [Instalação do Exchange](#-instalação-do-exchange)
-- [Configuração de URLs](#-configuração-de-urls)
-- [Certificados SSL](#-certificados-ssl)
-- [Configuração de Armazenamento](#-configuração-de-armazenamento)
-- [Configuração DNS](#-configuração-dns)
-- [Migração](#-migração)
-- [Pós-Migração](#-pós-migração)
-
 ## 🎯 Objetivo
 Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Server 2016 para o Exchange Server 2019. O processo de migração é crítico e requer planejamento cuidadoso para garantir:
 - Mínima interrupção dos serviços de email
@@ -38,6 +25,19 @@ Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Ser
 > - Realize a migração em horário de baixo impacto
 > - Tenha um plano de rollback detalhado
 > - Comunique antecipadamente todos os usuários sobre a migração
+
+## 📋 Índice
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação do Windows Server](#-instalação-do-windows-server)
+- [Download do Exchange](#-download-do-exchange)
+- [Preparação do Active Directory](#-preparação-do-active-directory)
+- [Instalação do Exchange](#-instalação-do-exchange)
+- [Configuração de URLs](#-configuração-de-urls)
+- [Certificados SSL](#-certificados-ssl)
+- [Configuração de Armazenamento](#-configuração-de-armazenamento)
+- [Configuração DNS](#-configuração-dns)
+- [Migração](#-migração)
+- [Pós-Migração](#-pós-migração)
 
 ## 💻 Pré-requisitos
 
