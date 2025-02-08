@@ -6,11 +6,12 @@
 ## 📋 Metadados
 Metadado | Descrição
 ---------|------------
-Título | Manual de Migração do Exchange Server 2016 para Exchange Server 2019
-Assunto | Microsoft Exchange Server
-Data | 08/02/2025
-Autor | Mathews Buzetti
-Tags | `exchange-server`, `email-migration`, `windows-server`, `active-directory`, `infrastructure-migration`
+| **Título** | Manual de Migração do Exchange Server 2016 para Exchange Server 2019
+| **Assunto** | Microsoft Exchange Server
+| **Versão** | 1.0.0 |
+| **Data** | 08/02/2025
+| **Autor** | Mathews Buzetti
+| **Tags** | `exchange-server`, `email-migration`, `windows-server`, `active-directory`, `infrastructure-migration`
 
 ## 🎯 Objetivo
 Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Server 2016 para o Exchange Server 2019. O processo de migração é crítico e requer planejamento cuidadoso para garantir:
