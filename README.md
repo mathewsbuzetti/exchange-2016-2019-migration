@@ -70,7 +70,7 @@ Este guia fornece instruções detalhadas para migração do Microsoft Exchange 
 3. Aguarde a conclusão
 4. ⚠️ **IMPORTANTE**: Reinicie o servidor após a instalação
 
-## 🛠️ Instalação do Windows Server
+## 🛠️ Instalar Recursos no Windows Server
 
 ### 🔧 2.1. Instalar RSAT-ADDS
 **Descrição**: As Remote Server Administration Tools (RSAT) são necessárias para gerenciar o Active Directory.
