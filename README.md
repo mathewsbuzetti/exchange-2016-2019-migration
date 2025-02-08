@@ -6,7 +6,7 @@
 ## 📋 Metadados
 Metadado | Descrição
 ---------|------------
-Título | Manual de Instalação, Configuração e Migração do Exchange Server 2016 para 2019
+Título | Manual de Migração do Exchange Server 2016 para Exchange Server 2019
 Assunto | Microsoft Exchange Server
 Data | 08/02/2025
 Autor | Mathews Buzetti
