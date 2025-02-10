@@ -419,9 +419,9 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 - Use nslookup para testar os registros
 - Verifique propagação do DNS
 
-# 📦 Migração de Caixas de Correio Exchange
+## 📦 Migração de Caixas de Correio Exchange
 
-## ⚠️ Exemplo de Bancos de Dados
+### ⚠️ Exemplo de Bancos de Dados
 No exemplo abaixo, estamos migrando de:
 - `DB-EX16-01` (Banco 1 do Exchange 2016)
 - `DB-EX16-RH` (Banco 2 do Exchange 2016)
@@ -432,11 +432,11 @@ Para:
 - `DB-EX19-RH` (Novo banco RH no Exchange 2019)
 - `DB-EX19-ADM` (Novo banco ADM no Exchange 2019)
 
-## 📋 Processo de Migração
+### 📋 Processo de Migração
 
-### 1️⃣ Migração das Caixas de Correio do Sistema
+#### 1️⃣ Migração das Caixas de Correio do Sistema
 
-#### 1.1. Verificação Inicial
+##### 1.1. Verificação Inicial
 ```powershell
 # Verificar caixas de arbitragem em cada banco
 Get-Mailbox -Database "DB-EX16-01" -Arbitration     # Banco Principal
@@ -444,7 +444,7 @@ Get-Mailbox -Database "DB-EX16-RH" -Arbitration     # Banco RH
 Get-Mailbox -Database "DB-EX16-ADM" -Arbitration    # Banco Administrativo
 ```
 
-#### 1.2. Migração de Arbitragem
+##### 1.2. Migração de Arbitragem
 ```powershell
 # Mover caixas de arbitragem para novos bancos
 Get-Mailbox -Database "DB-EX16-01" -Arbitration | 
@@ -457,9 +457,9 @@ Get-Mailbox -Database "DB-EX16-ADM" -Arbitration |
     New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Arbitragem ADM"
 ```
 
-## 2️⃣ Migração das Caixas de Correio de Usuários
+#### 2️⃣ Migração das Caixas de Correio de Usuários
 
-#### 2.1. Migração Padrão
+##### 2.1. Migração Padrão
 ```powershell
 # Migrar caixas de usuários
 Get-Mailbox -Database "DB-EX16-01" -RecipientTypeDetails UserMailbox | 
@@ -472,7 +472,7 @@ Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox |
     New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Usuários ADM"
 ```
 
-#### 2.2. Migração com BadItemLimit
+##### 2.2. Migração com BadItemLimit
 ```powershell
 # Para caixas com itens corrompidos
 Get-Mailbox -Database "DB-EX16-01" -RecipientTypeDetails UserMailbox | 
@@ -485,9 +485,9 @@ Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox |
     New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Usuários ADM BadItem" -BadItemLimit 50
 ```
 
-## 3️⃣ Monitoramento e Verificação
+#### 3️⃣ Monitoramento e Verificação
 
-#### 3.1. Status das Migrações
+##### 3.1. Status das Migrações
 ```powershell
 # Verificar progresso
 Get-MoveRequest | Get-MoveRequestStatistics
@@ -496,7 +496,7 @@ Get-MoveRequest | Get-MoveRequestStatistics
 Get-MoveRequest | Where-Object {$_.Status -eq "Completed"} | Remove-MoveRequest
 ```
 
-#### 3.2. Verificação Final
+##### 3.2. Verificação Final
 ```powershell
 # Verificar bancos originais
 Get-Mailbox -Database "DB-EX16-01"
@@ -509,7 +509,7 @@ Get-MailboxDatabase "DB-EX19-RH" | Format-List Name, ServerName, EdbFilePath, Lo
 Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
 ```
 
-⚠️ **IMPORTANTE**:
+### ⚠️ IMPORTANTE
 1. **Ordem de Migração**:
    - Primeiro: Caixas de arbitragem
    - Segundo: Caixas de usuários em lotes
