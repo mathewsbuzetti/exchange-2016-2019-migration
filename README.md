@@ -513,9 +513,16 @@ Get-MailboxDatabase "DB-EX19-RH" | Format-List Name, ServerName, EdbFilePath, Lo
 Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
 ```
 
-## 🔄 Configuração de Conectores e Verificação de Filas
+## 🔄 Configuração de Conectores
 
-### 📨 Migração de Conectores
+> ⚠️ **CAMPOS A SEREM ALTERADOS NOS COMANDOS**
+>  - Antes de executar os comandos, substitua os seguintes valores:
+>   - `EX19-SERVER` → Nome do seu servidor Exchange 2019
+>   - `0.0.0.0-255.255.255.255` → Range de IPs da sua rede
+>   - `0.0.0.0:25` → IP e porta do servidor para conexões anônimas
+>   - `0.0.0.0:587` → IP e porta do servidor para conexões autenticadas
+
+### 📨 Migração de Conectores de Envio
 1. Acessar Exchange Admin Center (EAC)
 2. Navegar até Fluxo de Email > Conectores de Envio
 3. Para cada conector:
@@ -524,6 +531,60 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
    - Remover servidor Exchange 2016
    - Salvar alterações
 4. Testar fluxo de email após cada alteração
+
+### 📥 Configuração de Conectores de Recebimento
+
+#### 1. Identificar Conectores no Exchange 2016
+```powershell
+# Listar conectores existentes
+Get-ReceiveConnector | Format-List Identity, Name, Bindings, RemoteIPRanges, AuthMechanism
+
+# Exportar configurações
+Get-ReceiveConnector | Export-CliXml C:\ConnectorSettings.xml
+```
+
+#### 2. Criar Conectores no Exchange 2019
+
+##### 2.1. Conector Anônimo
+```powershell
+# Criar conector anônimo
+New-ReceiveConnector -Name "Anonymous Connector" -Usage Custom -Bindings '0.0.0.0:25' -Server EX19-SERVER -RemoteIPRanges "0.0.0.0-255.255.255.255" 
+
+# Configurar permissões
+Set-ReceiveConnector "Anonymous Connector" -PermissionGroups AnonymousUsers
+```
+
+##### 2.2. Conector Autenticado
+```powershell
+# Criar conector autenticado
+New-ReceiveConnector -Name "Authenticated Connector" -Usage Custom -Bindings '0.0.0.0:587' -Server EX19-SERVER -RemoteIPRanges "0.0.0.0-255.255.255.255"
+
+# Configurar autenticação
+Set-ReceiveConnector "Authenticated Connector" -AuthMechanism Tls,Basic,Integrated -PermissionGroups ExchangeUsers
+```
+
+#### 3. Estabelecer Confiança entre Servidores
+
+##### 3.1. Configurar Confiança no Exchange 2019
+```powershell
+# Adicionar Exchange 2016 como servidor confiável
+Get-ExchangeServer | Add-ADPermission -User "NT AUTHORITY\ANONYMOUS LOGON" -ExtendedRights MS-Exc-Store-Admin
+
+# Configurar permissões do conector
+Get-ReceiveConnector | Add-ADPermission -User "NT AUTHORITY\ANONYMOUS LOGON" -ExtendedRights MS-Exc-Accept-Headers-Routing,MS-Exc-Accept-Headers-Forest,MS-Exc-Accept-Headers-Organization
+
+# Estabelecer confiança entre servidores
+Set-ADSiteLink -Identity "Default-First-Site-Link" -ReplicationInterval 15
+```
+
+#### 4. Reiniciar Serviço de Transporte
+```powershell
+# Reiniciar serviço de transporte
+Restart-Service MSExchangeTransport
+
+# Verificar status do serviço
+Get-Service MSExchangeTransport | Format-List Name, Status, DisplayName
+```
 
 ### 📧 Verificação de Filas de Email
 
