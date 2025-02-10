@@ -600,11 +600,41 @@ Get-Service MSExchangeTransport | Format-List Name, Status, DisplayName
 ```
 
 ### 📩 Testes de Conectores
-1. Teste envio interno
-2. Teste recebimento interno
-3. Teste envio externo
-4. Teste recebimento externo
-5. Verifique filas de mensagens
+1. Verificar conectores atuais
+2. Testar envio/recebimento interno e externo
+3. Verificar filas de mensagens
+4. Confirmar logs de transporte
+
+#### Testes via PowerShell
+
+1. **Teste com Autenticação**:
+```powershell
+Send-MailMessage -From 'remetente@seudominio.com.br' -To 'destinatario@seudominio.com.br' -Subject 'Teste Auth' -smtpserver IP-DO-SERVIDOR -port 25 -usessl -credential pscredential
+```
+**Alterar**:
+- `remetente@seudominio.com.br` → Email do remetente em seu domínio
+- `destinatario@seudominio.com.br` → Email do destinatário
+- `IP-DO-SERVIDOR` → IP do seu servidor Exchange
+- `port 25` → Porta configurada (25 ou 587)
+
+2. **Teste sem Autenticação**:
+```powershell
+Send-MailMessage -From 'relay@seudominio.com.br' -To 'destinatario@seudominio.com.br' -Subject 'Teste Relay' -body 'Mensagem de Teste - Favor desconsiderar' -smtpserver IP-DO-SERVIDOR
+```
+**Alterar**:
+- `relay@seudominio.com.br` → Email usado para relay
+- `destinatario@seudominio.com.br` → Email do destinatário
+- `IP-DO-SERVIDOR` → IP do seu servidor Exchange
+
+⚠️ **IMPORTANTE**:
+- Use endereços de email válidos no seu domínio
+- Configure credenciais antes do teste autenticado:
+```powershell
+$cred = Get-Credential
+```
+- Verifique logs após cada teste
+- Confirme recebimento das mensagens
+- Documente erros encontrados
 
 ### 📧 Verificação de Filas de Email
 
@@ -615,18 +645,6 @@ Get-Queue
 
 # Verificar filas com detalhes
 Get-Queue | Format-List Name,MessageCount,Status,NextHopDomain
-```
-
-#### 2️⃣ Verificar Mensagens nas Filas
-```powershell
-# Listar mensagens em todas as filas
-Get-Message -Queue *
-
-# Listar mensagens em uma fila específica
-Get-Message -Queue "Nome-Da-Fila"
-
-# Verificar mensagens com erro
-Get-Message -Queue * | Where {$_.Status -eq "Retry"}
 ```
 
 #### 3️⃣ Verificar Filas com Problemas
