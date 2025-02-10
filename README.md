@@ -28,8 +28,10 @@ Metadado | Descrição
 11. [Certificados SSL](#-certificados-ssl)
 12. [Configuração de Armazenamento](#-configuração-de-armazenamento)
 13. [Configuração DNS](#-configuração-dns)
-14. [Migração](#-migração)
-15. [Versionamento](#-versionamento)
+14. [Migração de Caixas de Correio Exchange](#-migração-de-caixas-de-correio-exchange)
+15. [Configuração de Conectores e Verificação de Filas](#-configuração-de-conectores-e-verificação-de-filas)
+16. [Testes Finais](#-testes-finais)
+17. [Versionamento](#-versionamento)
 
 ## 🎯 Objetivo
 Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Server 2016 para o Exchange Server 2019. O processo de migração é crítico e requer planejamento cuidadoso para garantir:
@@ -586,14 +588,7 @@ Acesse: https://testconnectivity.microsoft.com/
 - [ ] SMTP (envio/recebimento)
 - [ ] Fluxo de email interno
 - [ ] Fluxo de email externo
-- [ ] Verificação de filas:
-      ```powershell
-      # Verificar filas ativas
-      Get-Queue | Format-List Name,MessageCount,Status,NextHopDomain
-      
-      # Verificar mensagens com erro
-      Get-Message -Queue * | Where {$_.Status -eq "Retry"}
-      ```
+- [ ] Verificação de filas
 
 ### 3️⃣ Testes de Acesso
 - [ ] Login OWA (https://mail.seudominio.com/owa)
