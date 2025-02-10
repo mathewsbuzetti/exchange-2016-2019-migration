@@ -434,7 +434,7 @@ Para:
 
 ## 📋 Processo de Migração
 
-# 1️⃣ Migração das Caixas de Correio do Sistema
+## 1️⃣ Migração das Caixas de Correio do Sistema
 
 #### 1.1. Verificação Inicial
 ```powershell
