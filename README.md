@@ -400,84 +400,74 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 
 # 📦 Migração de Caixas de Correio Exchange
 
-## ⚠️ Preparação Importante
-Antes de iniciar o processo de migração, você precisará identificar e substituir os seguintes valores em todos os comandos:
-- `Mailbox Database 1398699602` → Nome do seu primeiro banco de dados de origem
-- `dtb1` → Nome do seu segundo banco de dados de origem
-- `Mailbox Database 1366087898` → Nome do seu terceiro banco de dados de origem
-- `DB01-2019` → Nome do seu banco de dados de destino no Exchange 2019
+## ⚠️ Exemplo de Bancos de Dados
+No exemplo abaixo, estamos migrando de:
+- `DB-EX16-01` (Banco 1 do Exchange 2016)
+- `DB-EX16-RH` (Banco 2 do Exchange 2016)
+- `DB-EX16-ADM` (Banco 3 do Exchange 2016)
 
-## 📋 Processo de Migração
+Para:
+- `DB-EX19-PROD` (Novo banco no Exchange 2019)
 
 ### 1️⃣ Migração das Caixas de Correio do Sistema
 
 #### 1.1. Verificação Inicial
 ```powershell
-# Substitua os nomes dos bancos pelos do seu ambiente
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-1" -Arbitration
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-2" -Arbitration
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-3" -Arbitration
+# Exemplo Original                           # Seu Ambiente
+Get-Mailbox -Database "DB-EX16-01" -Arbitration      # (Era: Mailbox Database 1398699602)
+Get-Mailbox -Database "DB-EX16-RH" -Arbitration      # (Era: dtb1)
+Get-Mailbox -Database "DB-EX16-ADM" -Arbitration     # (Era: Mailbox Database 1366087898)
 ```
 
 #### 1.2. Migração de Arbitragem
 ```powershell
-# Substitua os nomes dos bancos e mantenha o padrão de nomenclatura dos batches
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-1" -Arbitration | 
-    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Arbitragem Banco1"
+# Exemplo com nomes reais de bancos
+Get-Mailbox -Database "DB-EX16-01" -Arbitration | 
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Arbitragem DB01"
 
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-2" -Arbitration | 
-    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Arbitragem Banco2"
+Get-Mailbox -Database "DB-EX16-RH" -Arbitration | 
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Arbitragem RH"
 
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-3" -Arbitration | 
-    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Arbitragem Banco3"
+Get-Mailbox -Database "DB-EX16-ADM" -Arbitration | 
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Arbitragem ADM"
 ```
 
 ### 2️⃣ Migração das Caixas de Correio de Usuários
 
 #### 2.1. Migração Padrão
 ```powershell
-# Substitua os nomes dos bancos e adapte os nomes dos batches
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-1" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Usuários Banco1"
+# Exemplo com nomes descritivos dos bancos
+Get-Mailbox -Database "DB-EX16-01" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários DB01"
 
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-2" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Usuários Banco2"
+Get-Mailbox -Database "DB-EX16-RH" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários RH"
 
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-3" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Usuários Banco3"
+Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários ADM"
 ```
 
-#### 2.2. Migração com Tratamento de Itens Corrompidos
+#### 2.2. Migração com BadItemLimit
 ```powershell
-# Use estes comandos apenas se encontrar erros na migração padrão
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-1" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Usuários Banco1 BadItem" -BadItemLimit 50
+# Exemplo para casos de itens corrompidos
+Get-Mailbox -Database "DB-EX16-01" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários DB01 BadItem" -BadItemLimit 50
 ```
 
 ### 3️⃣ Monitoramento e Verificação
 
-#### 3.1. Monitoramento do Progresso
+#### 3.1. Verificação Final
 ```powershell
-# Não requer alteração
-Get-MoveRequest | Get-MoveRequestStatistics
+# Verificar bancos originais
+Get-Mailbox -Database "DB-EX16-01"
+Get-Mailbox -Database "DB-EX16-RH"
+Get-Mailbox -Database "DB-EX16-ADM"
+
+# Verificar novo banco
+Get-MailboxDatabase "DB-EX19-PROD" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
 ```
 
-#### 3.2. Limpeza de Solicitações
-```powershell
-# Não requer alteração
-Get-MoveRequest | Where-Object {$_.Status -eq "Completed"} | Remove-MoveRequest
-```
-
-#### 3.3. Verificação Final
-```powershell
-# Substitua pelos nomes dos seus bancos de dados
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-1"
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-2"
-Get-Mailbox -Database "NOME-DO-SEU-BANCO-3"
-
-# Substitua pelo nome do seu banco de destino
-Get-MailboxDatabase "SEU-BANCO-DESTINO" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
-```
+⚠️ **IMPORTANTE**: Substitua os nomes dos bancos de exemplo (`DB-EX16-01`, `DB-EX16-RH`, `DB-EX16-ADM`, `DB-EX19-PROD`) pelos nomes reais do seu ambiente.
 
 ## ⚠️ Notas Importantes
 1. **Antes da Migração**:
