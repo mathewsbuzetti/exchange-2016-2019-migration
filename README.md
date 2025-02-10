@@ -1,4 +1,4 @@
-# 🔄 Manual de Migração do Exchange Server 2016 para Exchange Server 2019
+# 🔄 Migração do Exchange Server 2016 para Exchange Server 2019
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Mathews_Buzetti-blue)](https://www.linkedin.com/in/mathewsbuzetti)
 [![Azure](https://img.shields.io/badge/Microsoft-Exchange_Server-orange)]()
 [![Status](https://img.shields.io/badge/Status-Production-green)]()
@@ -6,7 +6,7 @@
 ## 📋 Metadados
 Metadado | Descrição
 ---------|------------
-| **Título** | Manual de Migração do Exchange Server 2016 para Exchange Server 2019
+| **Título** | Migração do Exchange Server 2016 para Exchange Server 2019
 | **Assunto** | Microsoft Exchange Server
 | **Versão** | 1.0.0 |
 | **Data** | 10/02/2025
