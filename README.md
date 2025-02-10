@@ -517,10 +517,10 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
 
 > ⚠️ **CAMPOS A SEREM ALTERADOS NOS COMANDOS**
 >  - Antes de executar os comandos, substitua os seguintes valores:
->   - `EX19-SERVER` → Nome do seu servidor Exchange 2019
->   - `0.0.0.0-255.255.255.255` → Range de IPs da sua rede
->   - `0.0.0.0:25` → IP e porta do servidor para conexões anônimas
->   - `0.0.0.0:587` → IP e porta do servidor para conexões autenticadas
+>      - `EX19-SERVER` → Nome do seu servidor Exchange 2019
+>      - `0.0.0.0-255.255.255.255` → Range de IPs da sua rede
+>      - `0.0.0.0:25` → IP e porta do servidor para conexões anônimas
+>      - `0.0.0.0:587` → IP e porta do servidor para conexões autenticadas
 
 ### 📨 Migração de Conectores de Envio
 1. Acessar Exchange Admin Center (EAC)
