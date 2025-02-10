@@ -404,13 +404,14 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 
 ## 🌐 Configuração DNS
 
-**Descrição**: Configuração dos registros DNS necessários para o funcionamento do Exchange.
+**Descrição**: Configuração dos registros DNS necessários para o funcionamento do Exchange 2019.
 
 **Procedimento**:
 1. Abra o DNS Manager
 2. Adicione registros Host A:
-   - "Mail" apontando para o IP do servidor
-   - "Autodiscover" apontando para o IP do servidor
+   - "Mail" apontando para o IP do servidor EX2019
+   - "Autodiscover" apontando para o IP do servidor EX2019
+   - "Outlook" apontando para o IP do servidor EX2019
 3. Verifique/Atualize TTL dos registros
 
 **Verificação**:
