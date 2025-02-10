@@ -370,9 +370,10 @@ Set-MailboxDatabase "Mailbox Database 0582773279" –Name "DB01-2019"
 Move-DatabasePath DB01-2019 -EdbFilePath E:\DB01-2019\DB01-2019.edb –LogFolderPath F:\LOGS\DB01-2019
 ```
 
->  **⚠️ IMPORTANTE**: Além disso, ajuste os caminhos dos arquivos conforme a estrutura de diretórios do seu servidor. No exemplo fornecido:
-> - E:\DB01-2019\DB01-2019.edb → Este caminho representa o local onde o arquivo principal do banco de dados (.edb) será armazenado. Certifique-se de definir um diretório adequado para garantir organização e desempenho.
-> - F:\LOGS\DB01-2019 → Este caminho corresponde ao local onde os logs de transação do banco de dados serão armazenados. Esses logs são essenciais para a recuperação e integridade dos dados, então é importante escolher um diretório com espaço suficiente e boas práticas de armazenamento.
+>  **⚠️ IMPORTANTE**: 
+> - Além disso, ajuste os caminhos dos arquivos conforme a estrutura de diretórios do seu servidor. No exemplo fornecido:
+>   - E:\DB01-2019\DB01-2019.edb → Este caminho representa o local onde o arquivo principal do banco de dados (.edb) será armazenado. Certifique-se de definir um diretório adequado para garantir organização e desempenho.
+>   - F:\LOGS\DB01-2019 → Este caminho corresponde ao local onde os logs de transação do banco de dados serão armazenados. Esses logs são essenciais para a recuperação e integridade dos dados, então é importante escolher um diretório com espaço suficiente e boas práticas de armazenamento.
 
 ### 📊 8.4. Verificar Alterações
 **Descrição**: Confirmação das alterações realizadas.
