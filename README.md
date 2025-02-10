@@ -404,7 +404,7 @@ Move-DatabasePath DB-EX19-ADM -EdbFilePath E:\DB-EX19-ADM\DB-EX19-ADM.edb –Log
 Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 ```
 
-## 🌐 Configuração DNS
+# 🌐 Configuração DNS
 
 **Descrição**: Configuração dos registros DNS necessários para o funcionamento do Exchange.
 
@@ -434,7 +434,7 @@ Para:
 
 ## 📋 Processo de Migração
 
-### 1️⃣ Migração das Caixas de Correio do Sistema
+# 1️⃣ Migração das Caixas de Correio do Sistema
 
 #### 1.1. Verificação Inicial
 ```powershell
@@ -485,7 +485,7 @@ Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox |
     New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Usuários ADM BadItem" -BadItemLimit 50
 ```
 
-### 3️⃣ Monitoramento e Verificação
+# 3️⃣ Monitoramento e Verificação
 
 #### 3.1. Status das Migrações
 ```powershell
@@ -529,7 +529,7 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
 
 # 🔄 Configuração de Conectores e Verificação de Filas
 
-## 📨 Migração de Conectores
+# 📨 Migração de Conectores
 1. Acessar Exchange Admin Center (EAC)
 2. Navegar até Fluxo de Email > Conectores de Envio
 3. Para cada conector:
@@ -539,7 +539,7 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
    - Salvar alterações
 4. Testar fluxo de email após cada alteração
 
-## 📧 Verificação de Filas de Email
+# 📧 Verificação de Filas de Email
 
 ### 1️⃣ Verificar Todas as Filas
 ```powershell
