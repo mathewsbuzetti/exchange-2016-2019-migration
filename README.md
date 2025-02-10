@@ -576,15 +576,11 @@ Set-ReceiveConnector "Authenticated Connector" -AuthMechanism Tls,Basic,Integrat
 ```powershell
 Get-ExchangeServer | Add-ADPermission -User "NT AUTHORITY\ANONYMOUS LOGON" -ExtendedRights MS-Exc-Store-Admin
 ```
-**Alterar**:
-- Nenhuma alteração necessária neste comando
 
 6. **Configurar Permissões de Conector**:
 ```powershell
 Get-ReceiveConnector | Add-ADPermission -User "NT AUTHORITY\ANONYMOUS LOGON" -ExtendedRights MS-Exc-Accept-Headers-Routing,MS-Exc-Accept-Headers-Forest,MS-Exc-Accept-Headers-Organization
 ```
-**Alterar**:
-- Nenhuma alteração necessária neste comando
 
 7. **Estabelecer Confiança**:
 ```powershell
