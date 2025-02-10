@@ -9,7 +9,7 @@ Metadado | Descrição
 | **Título** | Manual de Migração do Exchange Server 2016 para Exchange Server 2019
 | **Assunto** | Microsoft Exchange Server
 | **Versão** | 1.0.0 |
-| **Data** | 08/02/2025
+| **Data** | 10/02/2025
 | **Autor** | Mathews Buzetti
 | **Tags** | `exchange-server`, `email-migration`, `windows-server`, `active-directory`, `infrastructure-migration`
 
@@ -595,3 +595,8 @@ Acesse: https://testconnectivity.microsoft.com/
 > 1. Verifique os conectores antes de iniciar os testes
 > 2. Monitore as filas durante todo o processo
 > 3. Documente todos os resultados
+
+## 🔄 Versionamento
+
+- Versão: 1.0.0
+- Última atualização: 10/02/2025
