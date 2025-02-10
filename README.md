@@ -252,6 +252,11 @@ Após realizar todas as configurações no servidor Exchange antigo:
 ### 🔗 6.1. Configurar URLs Internas e Externas
 **Descrição**: Configuração dos endpoints de acesso para os diferentes serviços do Exchange.
 
+> ⚠️ **IMPORTANTE**: 
+> - Substitua "EX01" pelo nome real do seu servidor
+> - Substitua "mail.techijack.live" pelo FQDN real do seu ambiente
+> - Certifique-se de que o certificado SSL cobre todos os FQDNs configurados
+
 **Procedimento**:
 ```powershell
 $Server_name = "EX01"
@@ -292,11 +297,6 @@ $Auto_Discover = Get-ClientAccessServer $Server_name | Select AutoDiscoverServic
 $OWA,$ECP,$OAB,$EAS,$MAPI | Format-Table
 $Auto_Discover
 ```
-
-> ⚠️ **IMPORTANTE**: 
-> - Substitua "EX01" pelo nome real do seu servidor
-> - Substitua "mail.techijack.live" pelo FQDN real do seu ambiente
-> - Certifique-se de que o certificado SSL cobre todos os FQDNs configurados
 
 ## 🔒 Certificados SSL
 
