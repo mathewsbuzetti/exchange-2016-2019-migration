@@ -404,7 +404,7 @@ Move-DatabasePath DB-EX19-ADM -EdbFilePath E:\DB-EX19-ADM\DB-EX19-ADM.edb –Log
 Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 ```
 
-# 🌐 Configuração DNS
+## 🌐 Configuração DNS
 
 **Descrição**: Configuração dos registros DNS necessários para o funcionamento do Exchange.
 
@@ -457,7 +457,7 @@ Get-Mailbox -Database "DB-EX16-ADM" -Arbitration |
     New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Arbitragem ADM"
 ```
 
-### 2️⃣ Migração das Caixas de Correio de Usuários
+## 2️⃣ Migração das Caixas de Correio de Usuários
 
 #### 2.1. Migração Padrão
 ```powershell
@@ -485,7 +485,7 @@ Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox |
     New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Usuários ADM BadItem" -BadItemLimit 50
 ```
 
-# 3️⃣ Monitoramento e Verificação
+## 3️⃣ Monitoramento e Verificação
 
 #### 3.1. Status das Migrações
 ```powershell
@@ -527,7 +527,7 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
    - Teste envio/recebimento de emails
    - Valide conectividade do Outlook
 
-# 🔄 Configuração de Conectores e Verificação de Filas
+## 🔄 Configuração de Conectores e Verificação de Filas
 
 # 📨 Migração de Conectores
 1. Acessar Exchange Admin Center (EAC)
@@ -571,7 +571,7 @@ Get-Queue | Where {$_.Status -eq "Retry"} | Format-List
 Get-Queue | Where {$_.Status -eq "Suspended"}
 ```
 
-# ✅ Testes Finais
+## ✅ Testes Finais
 
 ## 🔍 Microsoft Remote Connectivity Analyzer
 Acesse: https://testconnectivity.microsoft.com/
