@@ -419,16 +419,16 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 
 ## 📦 Migração de Caixas de Correio Exchange
 
-### ⚠️ Exemplo de Bancos de Dados
-No exemplo abaixo, estamos migrando de:
-- `DB-EX16-01` (Banco 1 do Exchange 2016)
-- `DB-EX16-RH` (Banco 2 do Exchange 2016)
-- `DB-EX16-ADM` (Banco 3 do Exchange 2016)
+> ⚠️ **Exemplo de Bancos de Dados**
+> No exemplo abaixo, estamos migrando de:
+>    - `DB-EX16-01` (Banco 1 do Exchange 2016)
+>    - `DB-EX16-RH` (Banco 2 do Exchange 2016)
+>    - `DB-EX16-ADM` (Banco 3 do Exchange 2016)
 
-Para:
-- `DB-EX19-PROD` (Novo banco no Exchange 2019)
-- `DB-EX19-RH` (Novo banco RH no Exchange 2019)
-- `DB-EX19-ADM` (Novo banco ADM no Exchange 2019)
+> Para:
+>    - `DB-EX19-PROD` (Novo banco no Exchange 2019)
+>    - `DB-EX19-RH` (Novo banco RH no Exchange 2019)
+>    - `DB-EX19-ADM` (Novo banco ADM no Exchange 2019)
 
 ### 📋 Processo de Migração
 
