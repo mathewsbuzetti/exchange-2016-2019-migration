@@ -343,7 +343,7 @@ $Auto_Discover
 
 **Procedimento**:
 ```powershell
-# Carregar PowerShell Exchange
+# Abrir o PowerShell do Exchange e Importar esse Modulo
 Add-PSSnapin Microsoft.Exchange.Management.PowerShell.SnapIn
 
 # Verificar bancos atuais
@@ -397,67 +397,111 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 **Verificação**:
 - Use nslookup para testar os registros
 - Verifique propagação do DNS
-- Teste Autodiscover com clientes Outlook
 
-## 📦 Migração
+# 📦 Migração de Caixas de Correio Exchange
 
-### 📨 10.1. Migração das Caixas de Correio do Sistema
-**Descrição**: Migração das caixas de correio de arbitragem e sistema.
+## ⚠️ Preparação Importante
+Antes de iniciar o processo de migração, você precisará identificar e substituir os seguintes valores em todos os comandos:
+- `Mailbox Database 1398699602` → Nome do seu primeiro banco de dados de origem
+- `dtb1` → Nome do seu segundo banco de dados de origem
+- `Mailbox Database 1366087898` → Nome do seu terceiro banco de dados de origem
+- `DB01-2019` → Nome do seu banco de dados de destino no Exchange 2019
 
-**Procedimento**:
+## 📋 Processo de Migração
+
+### 1️⃣ Migração das Caixas de Correio do Sistema
+
+#### 1.1. Verificação Inicial
 ```powershell
-# Verificar caixas de arbitragem
-Get-Mailbox -Database "Mailbox Database 1398699602" -Arbitration
-Get-Mailbox -Database "dtb1" -Arbitration
-Get-Mailbox -Database "Mailbox Database 1366087898" -Arbitration
-
-# Mover caixas de arbitragem
-Get-Mailbox -Database "Mailbox Database 1398699602" -Arbitration | 
-    New-MoveRequest -TargetDatabase DB01-2019 -BatchName "Migração Arbitragem 1398699602"
+# Substitua os nomes dos bancos pelos do seu ambiente
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-1" -Arbitration
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-2" -Arbitration
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-3" -Arbitration
 ```
 
-⚠️ **IMPORTANTE**: 
-- Faça a migração em lotes pequenos
-- Monitore o progresso
-- Mantenha logs detalhados
-
-### 👥 10.2. Migração das Caixas de Correio de Usuários
-**Descrição**: Migração das caixas de correio dos usuários finais.
-
-**Procedimento**:
+#### 1.2. Migração de Arbitragem
 ```powershell
-# Migração padrão
-Get-Mailbox -Database "Mailbox Database 1398699602" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase DB01-2019 -BatchName "Migração Usuários 1398699602"
+# Substitua os nomes dos bancos e mantenha o padrão de nomenclatura dos batches
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-1" -Arbitration | 
+    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Arbitragem Banco1"
 
-# Com tratamento de itens corrompidos
-Get-Mailbox -Database "Mailbox Database 1398699602" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase DB01-2019 -BatchName "Migração Usuários 1398699602 com BadItem" -BadItemLimit 50
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-2" -Arbitration | 
+    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Arbitragem Banco2"
+
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-3" -Arbitration | 
+    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Arbitragem Banco3"
 ```
 
-**Melhores Práticas**:
-- Comunique os usuários
-- Planeje janelas de manutenção
-- Prepare plano de rollback
-- Monitore performance do servidor
+### 2️⃣ Migração das Caixas de Correio de Usuários
 
-### 📊 10.3. Monitoramento da Migração
-**Descrição**: Acompanhamento do progresso e status das migrações.
-
-**Procedimento**:
+#### 2.1. Migração Padrão
 ```powershell
-# Verificar status geral
+# Substitua os nomes dos bancos e adapte os nomes dos batches
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-1" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Usuários Banco1"
+
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-2" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Usuários Banco2"
+
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-3" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Usuários Banco3"
+```
+
+#### 2.2. Migração com Tratamento de Itens Corrompidos
+```powershell
+# Use estes comandos apenas se encontrar erros na migração padrão
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-1" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "SEU-BANCO-DESTINO" -BatchName "Migração Usuários Banco1 BadItem" -BadItemLimit 50
+```
+
+### 3️⃣ Monitoramento e Verificação
+
+#### 3.1. Monitoramento do Progresso
+```powershell
+# Não requer alteração
 Get-MoveRequest | Get-MoveRequestStatistics
+```
 
-# Limpar solicitações concluídas
+#### 3.2. Limpeza de Solicitações
+```powershell
+# Não requer alteração
 Get-MoveRequest | Where-Object {$_.Status -eq "Completed"} | Remove-MoveRequest
 ```
 
-### ✅ 10.4. Verificação Final
-**Descrição**: Confirmação da conclusão da migração.
-
-**Procedimento**:
+#### 3.3. Verificação Final
 ```powershell
-# Verificar caixas restantes em cada banco
-Get-Mailbox -Database "Mailbox Database 1398
+# Substitua pelos nomes dos seus bancos de dados
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-1"
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-2"
+Get-Mailbox -Database "NOME-DO-SEU-BANCO-3"
 
+# Substitua pelo nome do seu banco de destino
+Get-MailboxDatabase "SEU-BANCO-DESTINO" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
+```
+
+## ⚠️ Notas Importantes
+1. **Antes da Migração**:
+   - Faça backup completo dos bancos de dados
+   - Verifique espaço em disco no destino
+   - Documente os nomes originais dos bancos
+
+2. **Durante a Migração**:
+   - Migre em lotes pequenos (máximo 30 caixas por lote)
+   - Monitore o uso de recursos do servidor
+   - Mantenha logs detalhados do processo
+
+3. **Após a Migração**:
+   - Verifique a integridade das caixas migradas
+   - Teste o acesso dos usuários
+   - Mantenha os bancos originais por 7 dias
+
+## 🔍 Verificações Pós-Migração
+1. Teste de conectividade Outlook
+2. Verificação de acesso OWA
+3. Teste de envio/recebimento de emails
+4. Confirmação de acesso aos itens antigos
+
+## 📝 Documentação Recomendada
+- Mantenha uma planilha com o status de cada batch
+- Documente quaisquer erros encontrados
+- Registre os tempos de migração para referência futura
