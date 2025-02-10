@@ -456,6 +456,12 @@ Get-Mailbox -Database "DB-EX16-ADM" -Arbitration |
 
 #### 2️⃣ Migração das Caixas de Correio de Usuários
 
+> **⚠️ IMPORTANTE**:
+> 1. **Ordem de Migração**:
+>      - Primeiro: Caixas de arbitragem
+>      - Segundo: Caixas de usuários em lotes
+>      - Terceiro: Caixas com problemas (usando BadItemLimit)
+
 ##### 2.1. Migração Padrão
 ```powershell
 # Migrar caixas de usuários
@@ -483,12 +489,6 @@ Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox |
 ```
 
 #### 3️⃣ Monitoramento e Verificação
-
-> **⚠️ IMPORTANTE**:
-> 1. **Ordem de Migração**:
->      - Primeiro: Caixas de arbitragem
->      - Segundo: Caixas de usuários em lotes
->      - Terceiro: Caixas com problemas (usando BadItemLimit)
 
 ##### 3.1. Status das Migrações
 ```powershell
