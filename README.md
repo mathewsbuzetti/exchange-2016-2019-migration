@@ -340,9 +340,7 @@ $Auto_Discover
 
 ## 💾 Configuração de Armazenamento
 
-# 💾 Configuração de Armazenamento
-
-## 📊 8.1. Verificar Bancos de Dados
+### 📊 8.1. Verificar Bancos de Dados
 **Descrição**: Levantamento dos bancos de dados existentes e suas configurações.
 
 **Procedimento**:
@@ -353,7 +351,7 @@ Add-PSSnapin Microsoft.Exchange.Management.PowerShell.SnapIn
 # Verificar bancos atuais
 Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 ```
-## 📊 8.2. Renomear Banco de Dados
+### 📊 8.2. Renomear Banco de Dados
 **Descrição**: Padronização do nome do banco de dados para melhor gerenciamento.
 
 **Procedimento**:
@@ -371,7 +369,7 @@ Set-MailboxDatabase "DB-EX16-ADM" –Name "DB-EX19-ADM"
   - EX19: Exchange 2019
   - PROD/RH/ADM: Identificador do ambiente/departamento
 
-## 📊 8.3. Mover Caminhos
+### 📊 8.3. Mover Caminhos
 **Descrição**: Configuração dos caminhos para arquivos de banco de dados e logs.
 
 **Procedimento**:
