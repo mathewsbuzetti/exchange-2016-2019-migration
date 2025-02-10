@@ -311,10 +311,10 @@ $Auto_Discover
 5. Escolha um local seguro e defina uma senha forte
 6. Salve o arquivo .pfx
 
-⚠️ **IMPORTANTE**: 
-- Mantenha a senha em local seguro
-- Certifique-se de que o certificado não está expirado
-- Verifique se todos os nomes alternativos (SANs) necessários estão incluídos
+> ⚠️ **IMPORTANTE**: 
+> - Mantenha a senha em local seguro
+> - Certifique-se de que o certificado não está expirado
+> - Verifique se todos os nomes alternativos (SANs) necessários estão incluídos
 
 ### 📜 7.2. Importar Certificado
 **Descrição**: Processo de importação do certificado no novo servidor Exchange 2019.
@@ -362,12 +362,12 @@ Set-MailboxDatabase "DB-EX16-RH" –Name "DB-EX19-RH"
 Set-MailboxDatabase "DB-EX16-ADM" –Name "DB-EX19-ADM"
 ```
 
-⚠️ **IMPORTANTE**:
-- Substitua "DB-EX16-01", "DB-EX16-RH", "DB-EX16-ADM" pelos nomes reais dos seus bancos
-- O novo padrão de nomenclatura usa:
-  - DB: Database
-  - EX19: Exchange 2019
-  - PROD/RH/ADM: Identificador do ambiente/departamento
+> ⚠️ **IMPORTANTE**:
+> - Substitua "DB-EX16-01", "DB-EX16-RH", "DB-EX16-ADM" pelos nomes reais dos seus bancos
+> - O novo padrão de nomenclatura usa:
+>  - DB: Database
+>  - EX19: Exchange 2019
+>  - PROD/RH/ADM: Identificador do ambiente/departamento
 
 ### 📊 8.3. Mover Caminhos
 **Descrição**: Configuração dos caminhos para arquivos de banco de dados e logs.
@@ -380,16 +380,16 @@ Move-DatabasePath DB-EX19-RH -EdbFilePath E:\DB-EX19-RH\DB-EX19-RH.edb –LogFol
 Move-DatabasePath DB-EX19-ADM -EdbFilePath E:\DB-EX19-ADM\DB-EX19-ADM.edb –LogFolderPath F:\LOGS\DB-EX19-ADM
 ```
 
-⚠️ **IMPORTANTE**:
-1. Estrutura dos diretórios:
-   - Arquivos .edb:
-     - `E:\DB-EX19-PROD\DB-EX19-PROD.edb`
-     - `E:\DB-EX19-RH\DB-EX19-RH.edb`
-     - `E:\DB-EX19-ADM\DB-EX19-ADM.edb`
-   - Arquivos de Log:
-     - `F:\LOGS\DB-EX19-PROD`
-     - `F:\LOGS\DB-EX19-RH`
-     - `F:\LOGS\DB-EX19-ADM`
+> ⚠️ **IMPORTANTE**:
+> 1. Estrutura dos diretórios:
+>   - Arquivos .edb:
+>     - `E:\DB-EX19-PROD\DB-EX19-PROD.edb`
+>     - `E:\DB-EX19-RH\DB-EX19-RH.edb`
+>     - `E:\DB-EX19-ADM\DB-EX19-ADM.edb`
+>   - Arquivos de Log:
+>     - `F:\LOGS\DB-EX19-PROD`
+>     - `F:\LOGS\DB-EX19-RH`
+>     - `F:\LOGS\DB-EX19-ADM`
 
 2. Requisitos:
    - Use discos dedicados para .edb
@@ -511,21 +511,19 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
 
 > **⚠️ IMPORTANTE**:
 > 1. **Ordem de Migração**:
->   - Primeiro: Caixas de arbitragem
->   - Segundo: Caixas de usuários em lotes
->   - Terceiro: Caixas com problemas (usando BadItemLimit)
-
+>      - Primeiro: Caixas de arbitragem
+>      - Segundo: Caixas de usuários em lotes
+>      - Terceiro: Caixas com problemas (usando BadItemLimit)
 > 2. **Boas Práticas**:
->   - Migre em lotes pequenos (máximo 30 caixas)
->   - Monitore o progresso constantemente
->   - Mantenha logs detalhados
->   - Documente todos os erros
-
+>      - Migre em lotes pequenos (máximo 30 caixas)
+>      - Monitore o progresso constantemente
+>      - Mantenha logs detalhados
+>      - Documente todos os erros
 > 3. **Verificações Pós-Migração**:
->   - Confirme acesso dos usuários
->   - Verifique integridade dos dados
->   - Teste envio/recebimento de emails
->   - Valide conectividade do Outlook
+>      - Confirme acesso dos usuários
+>      - Verifique integridade dos dados
+>      - Teste envio/recebimento de emails
+>      - Valide conectividade do Outlook
 
 ## 🔄 Configuração de Conectores e Verificação de Filas
 
@@ -605,7 +603,7 @@ Acesse: https://testconnectivity.microsoft.com/
 - [ ] Recursos de sala
 - [ ] Lista de endereços global
 
-### ⚠️ IMPORTANTE
-1. Verifique os conectores antes de iniciar os testes
-2. Monitore as filas durante todo o processo
-3. Documente todos os resultados
+> **⚠️ IMPORTANTE**:
+> 1. Verifique os conectores antes de iniciar os testes
+> 2. Monitore as filas durante todo o processo
+> 3. Documente todos os resultados
