@@ -527,10 +527,49 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
    - Teste envio/recebimento de emails
    - Valide conectividade do Outlook
 
-## 📝 Documentação Recomendada
-- Mantenha uma planilha com o status de cada batch
-- Documente quaisquer erros encontrados
-- Registre os tempos de migração para referência futura
+# 🔄 Configuração de Conectores e Verificação de Filas
+
+## 📨 Migração de Conectores
+1. Acessar Exchange Admin Center (EAC)
+2. Navegar até Fluxo de Email > Conectores de Envio
+3. Para cada conector:
+   - Editar o conector existente
+   - Adicionar novo servidor Exchange 2019
+   - Remover servidor Exchange 2016
+   - Salvar alterações
+4. Testar fluxo de email após cada alteração
+
+## 📧 Verificação de Filas de Email
+
+### 1️⃣ Verificar Todas as Filas
+```powershell
+# Listar todas as filas
+Get-Queue
+
+# Verificar filas com detalhes
+Get-Queue | Format-List Name,MessageCount,Status,NextHopDomain
+```
+
+### 2️⃣ Verificar Mensagens nas Filas
+```powershell
+# Listar mensagens em todas as filas
+Get-Message -Queue *
+
+# Listar mensagens em uma fila específica
+Get-Message -Queue "Nome-Da-Fila"
+
+# Verificar mensagens com erro
+Get-Message -Queue * | Where {$_.Status -eq "Retry"}
+```
+
+### 3️⃣ Verificar Filas com Problemas
+```powershell
+# Verificar filas com status de erro
+Get-Queue | Where {$_.Status -eq "Retry"} | Format-List
+
+# Verificar filas paradas
+Get-Queue | Where {$_.Status -eq "Suspended"}
+```
 
 # ✅ Testes Finais
 
@@ -547,7 +586,14 @@ Acesse: https://testconnectivity.microsoft.com/
 - [ ] SMTP (envio/recebimento)
 - [ ] Fluxo de email interno
 - [ ] Fluxo de email externo
-- [ ] Verificar filas de email
+- [ ] Verificação de filas:
+      ```powershell
+      # Verificar filas ativas
+      Get-Queue | Format-List Name,MessageCount,Status,NextHopDomain
+      
+      # Verificar mensagens com erro
+      Get-Message -Queue * | Where {$_.Status -eq "Retry"}
+      ```
 
 ### 3️⃣ Testes de Acesso
 - [ ] Login OWA (https://mail.seudominio.com/owa)
@@ -566,10 +612,9 @@ Acesse: https://testconnectivity.microsoft.com/
 - [ ] Recursos de sala
 - [ ] Lista de endereços global
 
-```
-
 ⚠️ **IMPORTANTE**:
-1. Execute todos os testes de um ambiente de usuário comum
-2. Documente todos os resultados
-3. Corrija falhas antes de liberar para produção
-4. Mantenha backup dos logs de teste
+1. Verifique os conectores antes de iniciar os testes
+2. Monitore as filas durante todo o processo
+3. Documente todos os resultados
+4. Corrija falhas antes de liberar para produção
+5. Mantenha backup dos logs de teste
