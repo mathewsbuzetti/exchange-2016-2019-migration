@@ -132,7 +132,7 @@ Get-WindowsFeature | Where-Object {$_.Installed -eq $true} | Format-Table Name,I
 2. Extraia o arquivo ISO baixado
 3. Mantenha os arquivos em um local de fácil acesso
 
-⚠️ **IMPORTANTE**: Certifique-se de baixar a versão mais recente disponível no momento da instalação.
+> ⚠️ **IMPORTANTE**: Certifique-se de baixar a versão mais recente disponível no momento da instalação.
 
 ## 🔄 Preparação do Active Directory
 
@@ -161,9 +161,9 @@ Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAD /Organi
 Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAD
 ```
 
-⚠️ **IMPORTANTE**: 
-- O nome da organização não pode ser alterado depois de definido
-- Use um nome sem espaços
+> ⚠️ **IMPORTANTE**: 
+> - O nome da organização não pode ser alterado depois de definido
+> - Use um nome sem espaços
 
 ### 🛠️ 4.3. Preparar Todos os Domínios
 **Descrição**: Prepara todos os domínios da floresta para o Exchange 2019.
@@ -293,10 +293,10 @@ $OWA,$ECP,$OAB,$EAS,$MAPI | Format-Table
 $Auto_Discover
 ```
 
-⚠️ **IMPORTANTE**: 
-- Substitua "EX01" pelo nome real do seu servidor
-- Substitua "mail.techijack.live" pelo FQDN real do seu ambiente
-- Certifique-se de que o certificado SSL cobre todos os FQDNs configurados
+> ⚠️ **IMPORTANTE**: 
+> - Substitua "EX01" pelo nome real do seu servidor
+> - Substitua "mail.techijack.live" pelo FQDN real do seu ambiente
+> - Certifique-se de que o certificado SSL cobre todos os FQDNs configurados
 
 ## 🔒 Certificados SSL
 
@@ -314,7 +314,6 @@ $Auto_Discover
 > ⚠️ **IMPORTANTE**: 
 > - Mantenha a senha em local seguro
 > - Certifique-se de que o certificado não está expirado
-> - Verifique se todos os nomes alternativos (SANs) necessários estão incluídos
 
 ### 📜 7.2. Importar Certificado
 **Descrição**: Processo de importação do certificado no novo servidor Exchange 2019.
@@ -365,9 +364,9 @@ Set-MailboxDatabase "DB-EX16-ADM" –Name "DB-EX19-ADM"
 > ⚠️ **IMPORTANTE**:
 > - Substitua "DB-EX16-01", "DB-EX16-RH", "DB-EX16-ADM" pelos nomes reais dos seus bancos
 > - O novo padrão de nomenclatura usa:
->  - DB: Database
->  - EX19: Exchange 2019
->  - PROD/RH/ADM: Identificador do ambiente/departamento
+>     - DB: Database
+>     - EX19: Exchange 2019
+>     - PROD/RH/ADM: Identificador do ambiente/departamento
 
 ### 📊 8.3. Mover Caminhos
 **Descrição**: Configuração dos caminhos para arquivos de banco de dados e logs.
