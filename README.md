@@ -529,7 +529,7 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
 
 ## 🔄 Configuração de Conectores e Verificação de Filas
 
-# 📨 Migração de Conectores
+### 📨 Migração de Conectores
 1. Acessar Exchange Admin Center (EAC)
 2. Navegar até Fluxo de Email > Conectores de Envio
 3. Para cada conector:
@@ -539,9 +539,9 @@ Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, L
    - Salvar alterações
 4. Testar fluxo de email após cada alteração
 
-# 📧 Verificação de Filas de Email
+### 📧 Verificação de Filas de Email
 
-### 1️⃣ Verificar Todas as Filas
+#### 1️⃣ Verificar Todas as Filas
 ```powershell
 # Listar todas as filas
 Get-Queue
@@ -550,7 +550,7 @@ Get-Queue
 Get-Queue | Format-List Name,MessageCount,Status,NextHopDomain
 ```
 
-### 2️⃣ Verificar Mensagens nas Filas
+#### 2️⃣ Verificar Mensagens nas Filas
 ```powershell
 # Listar mensagens em todas as filas
 Get-Message -Queue *
@@ -562,7 +562,7 @@ Get-Message -Queue "Nome-Da-Fila"
 Get-Message -Queue * | Where {$_.Status -eq "Retry"}
 ```
 
-### 3️⃣ Verificar Filas com Problemas
+#### 3️⃣ Verificar Filas com Problemas
 ```powershell
 # Verificar filas com status de erro
 Get-Queue | Where {$_.Status -eq "Retry"} | Format-List
@@ -573,7 +573,7 @@ Get-Queue | Where {$_.Status -eq "Suspended"}
 
 ## ✅ Testes Finais
 
-## 🔍 Microsoft Remote Connectivity Analyzer
+### 🔍 Microsoft Remote Connectivity Analyzer
 Acesse: https://testconnectivity.microsoft.com/
 
 ### 1️⃣ Testes de Conectividade Outlook
@@ -605,9 +605,7 @@ Acesse: https://testconnectivity.microsoft.com/
 - [ ] Recursos de sala
 - [ ] Lista de endereços global
 
-⚠️ **IMPORTANTE**:
+### ⚠️ IMPORTANTE
 1. Verifique os conectores antes de iniciar os testes
 2. Monitore as filas durante todo o processo
 3. Documente todos os resultados
-4. Corrija falhas antes de liberar para produção
-5. Mantenha backup dos logs de teste
