@@ -585,17 +585,6 @@ Acesse: https://testconnectivity.microsoft.com/
 - [ ] Verificar avisos de segurança
 - [ ] Testar todas as URLs publicadas
 
-### 5️⃣ Testes de Funcionalidades
-- [ ] Calendário compartilhado
-- [ ] Caixas compartilhadas
-- [ ] Recursos de sala
-- [ ] Lista de endereços global
-
-> **⚠️ IMPORTANTE**:
-> 1. Verifique os conectores antes de iniciar os testes
-> 2. Monitore as filas durante todo o processo
-> 3. Documente todos os resultados
-
 ## 🔄 Versionamento
 
 - Versão: 1.0.0
