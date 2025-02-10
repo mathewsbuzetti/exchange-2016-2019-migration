@@ -338,42 +338,63 @@ $Auto_Discover
 
 ## 💾 Configuração de Armazenamento
 
-### 📊 8.1. Verificar Bancos de Dados
+# 💾 Configuração de Armazenamento
+
+## 📊 8.1. Verificar Bancos de Dados
 **Descrição**: Levantamento dos bancos de dados existentes e suas configurações.
 
 **Procedimento**:
 ```powershell
-# Abrir o PowerShell do Exchange e Importar esse Modulo
+# Abrir o PowerShell do Exchange e Importar esse Módulo
 Add-PSSnapin Microsoft.Exchange.Management.PowerShell.SnapIn
 
 # Verificar bancos atuais
 Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 ```
-
-### 📊 8.2. Renomear Banco de Dados
+## 📊 8.2. Renomear Banco de Dados
 **Descrição**: Padronização do nome do banco de dados para melhor gerenciamento.
 
 **Procedimento**:
 ```powershell
-Set-MailboxDatabase "Mailbox Database 0582773279" –Name "DB01-2019"
+# Exemplo de renomeação para cada banco
+Set-MailboxDatabase "DB-EX16-01" –Name "DB-EX19-PROD"
+Set-MailboxDatabase "DB-EX16-RH" –Name "DB-EX19-RH"
+Set-MailboxDatabase "DB-EX16-ADM" –Name "DB-EX19-ADM"
 ```
->  **⚠️ ATENÇÃO**: 
-> - O nome "Mailbox Database 0582773279" é APENAS UM EXEMPLO.
-> - SUBSTITUA pelo nome real do banco de dados identificado no passo de verificação (Get-MailboxDatabase).
-> - "DB01-2019" é um nome sugerido. Escolha um nome significativo para sua organização.
 
-### 📊 8.3. Mover Caminhos
+⚠️ **IMPORTANTE**:
+- Substitua "DB-EX16-01", "DB-EX16-RH", "DB-EX16-ADM" pelos nomes reais dos seus bancos
+- O novo padrão de nomenclatura usa:
+  - DB: Database
+  - EX19: Exchange 2019
+  - PROD/RH/ADM: Identificador do ambiente/departamento
+
+## 📊 8.3. Mover Caminhos
 **Descrição**: Configuração dos caminhos para arquivos de banco de dados e logs.
 
 **Procedimento**:
 ```powershell
-Move-DatabasePath DB01-2019 -EdbFilePath E:\DB01-2019\DB01-2019.edb –LogFolderPath F:\LOGS\DB01-2019
+# Exemplo para cada banco
+Move-DatabasePath DB-EX19-PROD -EdbFilePath E:\DB-EX19-PROD\DB-EX19-PROD.edb –LogFolderPath F:\LOGS\DB-EX19-PROD
+Move-DatabasePath DB-EX19-RH -EdbFilePath E:\DB-EX19-RH\DB-EX19-RH.edb –LogFolderPath F:\LOGS\DB-EX19-RH
+Move-DatabasePath DB-EX19-ADM -EdbFilePath E:\DB-EX19-ADM\DB-EX19-ADM.edb –LogFolderPath F:\LOGS\DB-EX19-ADM
 ```
 
->  **⚠️ IMPORTANTE**: 
-> - Além disso, ajuste os caminhos dos arquivos conforme a estrutura de diretórios do seu servidor. No exemplo fornecido:
->   - E:\DB01-2019\DB01-2019.edb → Este caminho representa o local onde o arquivo principal do banco de dados (.edb) será armazenado. Certifique-se de definir um diretório adequado para garantir organização e desempenho.
->   - F:\LOGS\DB01-2019 → Este caminho corresponde ao local onde os logs de transação do banco de dados serão armazenados. Esses logs são essenciais para a recuperação e integridade dos dados, então é importante escolher um diretório com espaço suficiente e boas práticas de armazenamento.
+⚠️ **IMPORTANTE**:
+1. Estrutura dos diretórios:
+   - Arquivos .edb:
+     - `E:\DB-EX19-PROD\DB-EX19-PROD.edb`
+     - `E:\DB-EX19-RH\DB-EX19-RH.edb`
+     - `E:\DB-EX19-ADM\DB-EX19-ADM.edb`
+   - Arquivos de Log:
+     - `F:\LOGS\DB-EX19-PROD`
+     - `F:\LOGS\DB-EX19-RH`
+     - `F:\LOGS\DB-EX19-ADM`
+
+2. Requisitos:
+   - Use discos dedicados para .edb
+   - Mantenha logs em disco separado
+   - Monitore espaço em ambos volumes
 
 ### 📊 8.4. Verificar Alterações
 **Descrição**: Confirmação das alterações realizadas.
@@ -408,90 +429,147 @@ No exemplo abaixo, estamos migrando de:
 
 Para:
 - `DB-EX19-PROD` (Novo banco no Exchange 2019)
+- `DB-EX19-RH` (Novo banco RH no Exchange 2019)
+- `DB-EX19-ADM` (Novo banco ADM no Exchange 2019)
+
+## 📋 Processo de Migração
 
 ### 1️⃣ Migração das Caixas de Correio do Sistema
 
 #### 1.1. Verificação Inicial
 ```powershell
-# Exemplo Original                           # Seu Ambiente
-Get-Mailbox -Database "DB-EX16-01" -Arbitration      # (Era: Mailbox Database 1398699602)
-Get-Mailbox -Database "DB-EX16-RH" -Arbitration      # (Era: dtb1)
-Get-Mailbox -Database "DB-EX16-ADM" -Arbitration     # (Era: Mailbox Database 1366087898)
+# Verificar caixas de arbitragem em cada banco
+Get-Mailbox -Database "DB-EX16-01" -Arbitration     # Banco Principal
+Get-Mailbox -Database "DB-EX16-RH" -Arbitration     # Banco RH
+Get-Mailbox -Database "DB-EX16-ADM" -Arbitration    # Banco Administrativo
 ```
 
 #### 1.2. Migração de Arbitragem
 ```powershell
-# Exemplo com nomes reais de bancos
+# Mover caixas de arbitragem para novos bancos
 Get-Mailbox -Database "DB-EX16-01" -Arbitration | 
-    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Arbitragem DB01"
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Arbitragem PROD"
 
 Get-Mailbox -Database "DB-EX16-RH" -Arbitration | 
-    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Arbitragem RH"
+    New-MoveRequest -TargetDatabase "DB-EX19-RH" -BatchName "Migração Arbitragem RH"
 
 Get-Mailbox -Database "DB-EX16-ADM" -Arbitration | 
-    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Arbitragem ADM"
+    New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Arbitragem ADM"
 ```
 
 ### 2️⃣ Migração das Caixas de Correio de Usuários
 
 #### 2.1. Migração Padrão
 ```powershell
-# Exemplo com nomes descritivos dos bancos
+# Migrar caixas de usuários
 Get-Mailbox -Database "DB-EX16-01" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários DB01"
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários PROD"
 
 Get-Mailbox -Database "DB-EX16-RH" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários RH"
+    New-MoveRequest -TargetDatabase "DB-EX19-RH" -BatchName "Migração Usuários RH"
 
 Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários ADM"
+    New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Usuários ADM"
 ```
 
 #### 2.2. Migração com BadItemLimit
 ```powershell
-# Exemplo para casos de itens corrompidos
+# Para caixas com itens corrompidos
 Get-Mailbox -Database "DB-EX16-01" -RecipientTypeDetails UserMailbox | 
-    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários DB01 BadItem" -BadItemLimit 50
+    New-MoveRequest -TargetDatabase "DB-EX19-PROD" -BatchName "Migração Usuários PROD BadItem" -BadItemLimit 50
+
+Get-Mailbox -Database "DB-EX16-RH" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "DB-EX19-RH" -BatchName "Migração Usuários RH BadItem" -BadItemLimit 50
+
+Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox | 
+    New-MoveRequest -TargetDatabase "DB-EX19-ADM" -BatchName "Migração Usuários ADM BadItem" -BadItemLimit 50
 ```
 
 ### 3️⃣ Monitoramento e Verificação
 
-#### 3.1. Verificação Final
+#### 3.1. Status das Migrações
+```powershell
+# Verificar progresso
+Get-MoveRequest | Get-MoveRequestStatistics
+
+# Limpar solicitações concluídas
+Get-MoveRequest | Where-Object {$_.Status -eq "Completed"} | Remove-MoveRequest
+```
+
+#### 3.2. Verificação Final
 ```powershell
 # Verificar bancos originais
 Get-Mailbox -Database "DB-EX16-01"
 Get-Mailbox -Database "DB-EX16-RH"
 Get-Mailbox -Database "DB-EX16-ADM"
 
-# Verificar novo banco
+# Verificar novos bancos
 Get-MailboxDatabase "DB-EX19-PROD" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
+Get-MailboxDatabase "DB-EX19-RH" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
+Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
 ```
 
-⚠️ **IMPORTANTE**: Substitua os nomes dos bancos de exemplo (`DB-EX16-01`, `DB-EX16-RH`, `DB-EX16-ADM`, `DB-EX19-PROD`) pelos nomes reais do seu ambiente.
+⚠️ **IMPORTANTE**:
+1. **Ordem de Migração**:
+   - Primeiro: Caixas de arbitragem
+   - Segundo: Caixas de usuários em lotes
+   - Terceiro: Caixas com problemas (usando BadItemLimit)
 
-## ⚠️ Notas Importantes
-1. **Antes da Migração**:
-   - Faça backup completo dos bancos de dados
-   - Verifique espaço em disco no destino
-   - Documente os nomes originais dos bancos
+2. **Boas Práticas**:
+   - Migre em lotes pequenos (máximo 30 caixas)
+   - Monitore o progresso constantemente
+   - Mantenha logs detalhados
+   - Documente todos os erros
 
-2. **Durante a Migração**:
-   - Migre em lotes pequenos (máximo 30 caixas por lote)
-   - Monitore o uso de recursos do servidor
-   - Mantenha logs detalhados do processo
-
-3. **Após a Migração**:
-   - Verifique a integridade das caixas migradas
-   - Teste o acesso dos usuários
-   - Mantenha os bancos originais por 7 dias
-
-## 🔍 Verificações Pós-Migração
-1. Teste de conectividade Outlook
-2. Verificação de acesso OWA
-3. Teste de envio/recebimento de emails
-4. Confirmação de acesso aos itens antigos
+3. **Verificações Pós-Migração**:
+   - Confirme acesso dos usuários
+   - Verifique integridade dos dados
+   - Teste envio/recebimento de emails
+   - Valide conectividade do Outlook
 
 ## 📝 Documentação Recomendada
 - Mantenha uma planilha com o status de cada batch
 - Documente quaisquer erros encontrados
 - Registre os tempos de migração para referência futura
+
+# ✅ Testes Finais
+
+## 🔍 Microsoft Remote Connectivity Analyzer
+Acesse: https://testconnectivity.microsoft.com/
+
+### 1️⃣ Testes de Conectividade Outlook
+- [ ] Outlook Autodiscover
+- [ ] Outlook Web Access
+- [ ] ActiveSync
+- [ ] Exchange Web Services
+
+### 2️⃣ Testes de Email
+- [ ] SMTP (envio/recebimento)
+- [ ] Fluxo de email interno
+- [ ] Fluxo de email externo
+- [ ] Verificar filas de email
+
+### 3️⃣ Testes de Acesso
+- [ ] Login OWA (https://mail.seudominio.com/owa)
+- [ ] Login ECP (https://mail.seudominio.com/ecp)
+- [ ] Conexão Outlook desktop
+- [ ] Conexão dispositivos móveis
+
+### 4️⃣ Verificações SSL/TLS
+- [ ] Validar certificados
+- [ ] Verificar avisos de segurança
+- [ ] Testar todas as URLs publicadas
+
+### 5️⃣ Testes de Funcionalidades
+- [ ] Calendário compartilhado
+- [ ] Caixas compartilhadas
+- [ ] Recursos de sala
+- [ ] Lista de endereços global
+
+```
+
+⚠️ **IMPORTANTE**:
+1. Execute todos os testes de um ambiente de usuário comum
+2. Documente todos os resultados
+3. Corrija falhas antes de liberar para produção
+4. Mantenha backup dos logs de teste
