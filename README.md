@@ -484,6 +484,12 @@ Get-Mailbox -Database "DB-EX16-ADM" -RecipientTypeDetails UserMailbox |
 
 #### 3️⃣ Monitoramento e Verificação
 
+> **⚠️ IMPORTANTE**:
+> 1. **Ordem de Migração**:
+>      - Primeiro: Caixas de arbitragem
+>      - Segundo: Caixas de usuários em lotes
+>      - Terceiro: Caixas com problemas (usando BadItemLimit)
+
 ##### 3.1. Status das Migrações
 ```powershell
 # Verificar progresso
@@ -505,22 +511,6 @@ Get-MailboxDatabase "DB-EX19-PROD" | Format-List Name, ServerName, EdbFilePath, 
 Get-MailboxDatabase "DB-EX19-RH" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
 Get-MailboxDatabase "DB-EX19-ADM" | Format-List Name, ServerName, EdbFilePath, LogFolderPath
 ```
-
-> **⚠️ IMPORTANTE**:
-> 1. **Ordem de Migração**:
->      - Primeiro: Caixas de arbitragem
->      - Segundo: Caixas de usuários em lotes
->      - Terceiro: Caixas com problemas (usando BadItemLimit)
-> 2. **Boas Práticas**:
->      - Migre em lotes pequenos (máximo 30 caixas)
->      - Monitore o progresso constantemente
->      - Mantenha logs detalhados
->      - Documente todos os erros
-> 3. **Verificações Pós-Migração**:
->      - Confirme acesso dos usuários
->      - Verifique integridade dos dados
->      - Teste envio/recebimento de emails
->      - Valide conectividade do Outlook
 
 ## 🔄 Configuração de Conectores e Verificação de Filas
 
