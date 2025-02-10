@@ -382,18 +382,18 @@ Move-DatabasePath DB-EX19-ADM -EdbFilePath E:\DB-EX19-ADM\DB-EX19-ADM.edb –Log
 
 > ⚠️ **IMPORTANTE**:
 > 1. Estrutura dos diretórios:
->   - Arquivos .edb:
->     - `E:\DB-EX19-PROD\DB-EX19-PROD.edb`
->     - `E:\DB-EX19-RH\DB-EX19-RH.edb`
->     - `E:\DB-EX19-ADM\DB-EX19-ADM.edb`
->   - Arquivos de Log:
->     - `F:\LOGS\DB-EX19-PROD`
->     - `F:\LOGS\DB-EX19-RH`
->     - `F:\LOGS\DB-EX19-ADM`
+>      - Arquivos .edb:
+>        - `E:\DB-EX19-PROD\DB-EX19-PROD.edb`
+>        - `E:\DB-EX19-RH\DB-EX19-RH.edb`
+>        - `E:\DB-EX19-ADM\DB-EX19-ADM.edb`
+>      - Arquivos de Log:
+>        - `F:\LOGS\DB-EX19-PROD`
+>        - `F:\LOGS\DB-EX19-RH`
+>        - `F:\LOGS\DB-EX19-ADM`
 > 2. Requisitos:
->   - Use discos dedicados para .edb
->   - Mantenha logs em disco separado
->   - Monitore espaço em ambos volumes
+>      - Use discos dedicados para .edb
+>      - Mantenha logs em disco separado
+>      - Monitore espaço em ambos volumes
 
 ### 📊 8.4. Verificar Alterações
 **Descrição**: Confirmação das alterações realizadas.
