@@ -419,7 +419,7 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 - Use nslookup para testar os registros
 - Verifique propagação do DNS
 
-# 📦 Migração de Caixas de Correio Exchange
+## 📦 Migração de Caixas de Correio Exchange
 
 ## ⚠️ Exemplo de Bancos de Dados
 No exemplo abaixo, estamos migrando de:
