@@ -424,7 +424,7 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 >    - `DB-EX16-01` (Banco 1 do Exchange 2016)
 >    - `DB-EX16-RH` (Banco 2 do Exchange 2016)
 >    - `DB-EX16-ADM` (Banco 3 do Exchange 2016)
-> Para:
+>  - Para:
 >    - `DB-EX19-PROD` (Novo banco no Exchange 2019)
 >    - `DB-EX19-RH` (Novo banco RH no Exchange 2019)
 >    - `DB-EX19-ADM` (Novo banco ADM no Exchange 2019)
