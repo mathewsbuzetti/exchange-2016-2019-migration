@@ -611,6 +611,13 @@ Send-MailMessage -From 'remetente@seudominio.com.br' -To 'destinatario@seudomini
 > - `IP-DO-SERVIDOR` → IP do seu servidor Exchange
 > - `port 25` → Porta configurada (25 ou 587)
 
+> ⚠️ **IMPORTANTE**:
+> - Use endereços de email válidos no seu domínio
+> - Configure credenciais antes do teste autenticado:
+```powershell
+$cred = Get-Credential
+```
+
 2. **Teste sem Autenticação**:
 ```powershell
 Send-MailMessage -From 'relay@seudominio.com.br' -To 'destinatario@seudominio.com.br' -Subject 'Teste Relay' -body 'Mensagem de Teste - Favor desconsiderar' -smtpserver IP-DO-SERVIDOR
@@ -620,12 +627,6 @@ Send-MailMessage -From 'relay@seudominio.com.br' -To 'destinatario@seudominio.co
 > - `destinatario@seudominio.com.br` → Email do destinatário
 > - `IP-DO-SERVIDOR` → IP do seu servidor Exchange
 
-> ⚠️ **IMPORTANTE**:
-> - Use endereços de email válidos no seu domínio
-> - Configure credenciais antes do teste autenticado:
-```powershell
-$cred = Get-Credential
-```
 
 ### 📧 Verificação de Filas de Email
 
