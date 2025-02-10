@@ -390,11 +390,10 @@ Move-DatabasePath DB-EX19-ADM -EdbFilePath E:\DB-EX19-ADM\DB-EX19-ADM.edb –Log
 >     - `F:\LOGS\DB-EX19-PROD`
 >     - `F:\LOGS\DB-EX19-RH`
 >     - `F:\LOGS\DB-EX19-ADM`
-
-2. Requisitos:
-   - Use discos dedicados para .edb
-   - Mantenha logs em disco separado
-   - Monitore espaço em ambos volumes
+> 2. Requisitos:
+>   - Use discos dedicados para .edb
+>   - Mantenha logs em disco separado
+>   - Monitore espaço em ambos volumes
 
 ### 📊 8.4. Verificar Alterações
 **Descrição**: Confirmação das alterações realizadas.
