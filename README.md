@@ -542,35 +542,35 @@ Get-ReceiveConnector | Export-CliXml C:\ConnectorSettings.xml
 ```powershell
 New-ReceiveConnector -Name "Anonymous Connector" -Usage Custom -Bindings '0.0.0.0:25' -Server EX19-SERVER -RemoteIPRanges "0.0.0.0-255.255.255.255"
 ```
-**Alterar**:
-- `"Anonymous Connector"` → Nome desejado para o conector (Ex: "Conector Anônimo SMTP")
-- `'0.0.0.0:25'` → IP e porta do seu servidor
-- `EX19-SERVER` → Nome do seu servidor Exchange 2019
-- `"0.0.0.0-255.255.255.255"` → Range de IPs da sua rede
+> **Alterar**:
+> - `"Anonymous Connector"` → Nome desejado para o conector (Ex: "Conector Anônimo SMTP")
+> - `'0.0.0.0:25'` → IP e porta do seu servidor
+> - `EX19-SERVER` → Nome do seu servidor Exchange 2019
+> - `"0.0.0.0-255.255.255.255"` → Range de IPs da sua rede
 
 2. **Configurar Permissões Anônimas**:
 ```powershell
 Set-ReceiveConnector "Anonymous Connector" -PermissionGroups AnonymousUsers
 ```
-**Alterar**:
-- `"Anonymous Connector"` → Use o mesmo nome definido no comando anterior
+> **Alterar**:
+> - `"Anonymous Connector"` → Use o mesmo nome definido no comando anterior
 
 3. **Criar Conector Autenticado**:
 ```powershell
 New-ReceiveConnector -Name "Authenticated Connector" -Usage Custom -Bindings '0.0.0.0:587' -Server EX19-SERVER -RemoteIPRanges "0.0.0.0-255.255.255.255"
 ```
-**Alterar**:
-- `"Authenticated Connector"` → Nome desejado para o conector (Ex: "Conector Autenticado SMTP")
-- `'0.0.0.0:587'` → IP e porta do seu servidor
-- `EX19-SERVER` → Nome do seu servidor Exchange 2019
-- `"0.0.0.0-255.255.255.255"` → Range de IPs da sua rede
+> **Alterar**:
+> - `"Authenticated Connector"` → Nome desejado para o conector (Ex: "Conector Autenticado SMTP")
+> - `'0.0.0.0:587'` → IP e porta do seu servidor
+> - `EX19-SERVER` → Nome do seu servidor Exchange 2019
+> - `"0.0.0.0-255.255.255.255"` → Range de IPs da sua rede
 
 4. **Configurar Autenticação**:
 ```powershell
 Set-ReceiveConnector "Authenticated Connector" -AuthMechanism Tls,Basic,Integrated -PermissionGroups ExchangeUsers
 ```
-**Alterar**:
-- `"Authenticated Connector"` → Use o mesmo nome definido no comando anterior
+> **Alterar**:
+> - `"Authenticated Connector"` → Use o mesmo nome definido no comando anterior
 
 5. **Adicionar Servidor Confiável**:
 ```powershell
@@ -586,8 +586,8 @@ Get-ReceiveConnector | Add-ADPermission -User "NT AUTHORITY\ANONYMOUS LOGON" -Ex
 ```powershell
 Set-ADSiteLink -Identity "Default-First-Site-Link" -ReplicationInterval 15
 ```
-**Alterar**:
-- `"Default-First-Site-Link"` → Nome do seu Site Link do Active Directory
+> **Alterar**:
+> - `"Default-First-Site-Link"` → Nome do seu Site Link do Active Directory
 
 8. **Reiniciar Serviço**:
 ```powershell
@@ -599,42 +599,33 @@ Restart-Service MSExchangeTransport
 Get-Service MSExchangeTransport | Format-List Name, Status, DisplayName
 ```
 
-### 📩 Testes de Conectores
-1. Verificar conectores atuais
-2. Testar envio/recebimento interno e externo
-3. Verificar filas de mensagens
-4. Confirmar logs de transporte
-
-#### Testes via PowerShell
+### 📩 Testes de Conectores via PowerShell
 
 1. **Teste com Autenticação**:
 ```powershell
 Send-MailMessage -From 'remetente@seudominio.com.br' -To 'destinatario@seudominio.com.br' -Subject 'Teste Auth' -smtpserver IP-DO-SERVIDOR -port 25 -usessl -credential pscredential
 ```
-**Alterar**:
-- `remetente@seudominio.com.br` → Email do remetente em seu domínio
-- `destinatario@seudominio.com.br` → Email do destinatário
-- `IP-DO-SERVIDOR` → IP do seu servidor Exchange
-- `port 25` → Porta configurada (25 ou 587)
+> **Alterar**:
+> - `remetente@seudominio.com.br` → Email do remetente em seu domínio
+> - `destinatario@seudominio.com.br` → Email do destinatário
+> - `IP-DO-SERVIDOR` → IP do seu servidor Exchange
+> - `port 25` → Porta configurada (25 ou 587)
 
 2. **Teste sem Autenticação**:
 ```powershell
 Send-MailMessage -From 'relay@seudominio.com.br' -To 'destinatario@seudominio.com.br' -Subject 'Teste Relay' -body 'Mensagem de Teste - Favor desconsiderar' -smtpserver IP-DO-SERVIDOR
 ```
-**Alterar**:
-- `relay@seudominio.com.br` → Email usado para relay
-- `destinatario@seudominio.com.br` → Email do destinatário
-- `IP-DO-SERVIDOR` → IP do seu servidor Exchange
+> **Alterar**:
+> - `relay@seudominio.com.br` → Email usado para relay
+> - `destinatario@seudominio.com.br` → Email do destinatário
+> - `IP-DO-SERVIDOR` → IP do seu servidor Exchange
 
-⚠️ **IMPORTANTE**:
-- Use endereços de email válidos no seu domínio
-- Configure credenciais antes do teste autenticado:
+> ⚠️ **IMPORTANTE**:
+> - Use endereços de email válidos no seu domínio
+> - Configure credenciais antes do teste autenticado:
 ```powershell
 $cred = Get-Credential
 ```
-- Verifique logs após cada teste
-- Confirme recebimento das mensagens
-- Documente erros encontrados
 
 ### 📧 Verificação de Filas de Email
 
