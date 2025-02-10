@@ -614,7 +614,7 @@ Send-MailMessage -From 'remetente@seudominio.com.br' -To 'destinatario@seudomini
 > ⚠️ **IMPORTANTE**:
 > - Use endereços de email válidos no seu domínio
 > - Configure credenciais antes do teste autenticado:
->       - $cred = Get-Credential
+>   - $cred = Get-Credential
 
 
 2. **Teste sem Autenticação**:
