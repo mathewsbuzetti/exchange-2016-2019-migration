@@ -95,7 +95,9 @@ Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Ser
 1. Download: [IIS URL Rewrite](https://www.iis.net/downloads/microsoft/url-rewrite)
 2. Execute a instalação como administrador
 3. Aguarde a conclusão
-4. ⚠️ **IMPORTANTE**: Reinicie o servidor após a instalação
+
+> [!WARNING]
+> Reinicie o servidor após a instalação
 
 ## 🛠️ Instalação de Recursos no Windows Server
 
