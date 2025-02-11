@@ -1,10 +1,5 @@
 # 📜 Licença de Uso Restrito
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mathews_Buzetti-blue)](https://www.linkedin.com/in/mathewsbuzetti)
-![Status](https://img.shields.io/badge/Status-Production-green?style=flat-square)
-![Exchange](https://img.shields.io/badge/Exchange-2019-orange?style=flat-square)
-![Documentation](https://img.shields.io/badge/Documentation-Technical-blue?style=flat-square)
-
 > ### ⚡ Migração do Exchange Server 2016 para Exchange Server 2019
 > **Status**: ✅ Aprovado para Produção  
 > **Última Atualização**: 2025  
