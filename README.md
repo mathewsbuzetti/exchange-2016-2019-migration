@@ -162,7 +162,7 @@ Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAD /Organi
 Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAD
 ```
 
-> [!IMPORTANT]
+> [!WARNING]
 > - O nome da organização não pode ser alterado depois de definido
 > - Use um nome sem espaços
 
@@ -314,7 +314,7 @@ $Auto_Discover
 5. Escolha um local seguro e defina uma senha forte
 6. Salve o arquivo .pfx
 
-> [!IMPORTANT]
+> [!WARNING]
 > - Mantenha a senha em local seguro
 > - Certifique-se de que o certificado não está expirado
 
@@ -365,7 +365,7 @@ Set-MailboxDatabase "DB-EX16-RH" –Name "DB-EX19-RH"
 Set-MailboxDatabase "DB-EX16-ADM" –Name "DB-EX19-ADM"
 ```
 
-> [!IMPORTANT]
+> [!WARNING]
 > - Substitua "DB-EX16-01", "DB-EX16-RH", "DB-EX16-ADM" pelos nomes reais dos seus bancos
 > - O novo padrão de nomenclatura usa:
 >     - DB: Database
@@ -383,7 +383,7 @@ Move-DatabasePath DB-EX19-RH -EdbFilePath E:\DB-EX19-RH\DB-EX19-RH.edb –LogFol
 Move-DatabasePath DB-EX19-ADM -EdbFilePath E:\DB-EX19-ADM\DB-EX19-ADM.edb –LogFolderPath F:\LOGS\DB-EX19-ADM
 ```
 
-> [!IMPORTANT]
+> [!WARNING]
 > 1. Estrutura dos diretórios:
 >      - Arquivos .edb:
 >        - `E:\DB-EX19-PROD\DB-EX19-PROD.edb`
@@ -462,7 +462,7 @@ Get-Mailbox -Database "DB-EX16-ADM" -Arbitration |
 
 #### 2️⃣ Migração das Caixas de Correio de Usuários
 
-> [!IMPORTANT]
+> [!WARNING]
 > 1. **Ordem de Migração**:
 >      - Primeiro: Caixas de arbitragem
 >      - Segundo: Caixas de usuários em lotes
@@ -541,13 +541,18 @@ Get-ReceiveConnector | Format-List Identity, Name, Bindings, RemoteIPRanges, Aut
 Get-ReceiveConnector | Export-CliXml C:\ConnectorSettings.xml
 ```
 
+Sim, você tem razão! [!WARNING] é mais apropriado aqui porque estamos alertando sobre substituições necessárias que, se não forem feitas corretamente, podem causar problemas. Vou ajustar:
+
+```md
 #### 2. Criar Conectores no Exchange 2019
 
 1. **Criar Conector Anônimo**:
 ```powershell
 New-ReceiveConnector -Name "Anonymous Connector" -Usage Custom -Bindings '0.0.0.0:25' -Server EX19-SERVER -RemoteIPRanges "0.0.0.0-255.255.255.255"
 ```
-> **Alterar**:
+
+> [!WARNING]
+> **Substituições necessárias:**
 > - `"Anonymous Connector"` → Nome desejado para o conector (Ex: "Conector Anônimo SMTP")
 > - `'0.0.0.0:25'` → IP e porta do seu servidor
 > - `EX19-SERVER` → Nome do seu servidor Exchange 2019
@@ -557,14 +562,18 @@ New-ReceiveConnector -Name "Anonymous Connector" -Usage Custom -Bindings '0.0.0.
 ```powershell
 Set-ReceiveConnector "Anonymous Connector" -PermissionGroups AnonymousUsers
 ```
-> **Alterar**:
+
+> [!WARNING]
+> **Substituição necessária:**
 > - `"Anonymous Connector"` → Use o mesmo nome definido no comando anterior
 
 3. **Criar Conector Autenticado**:
 ```powershell
 New-ReceiveConnector -Name "Authenticated Connector" -Usage Custom -Bindings '0.0.0.0:587' -Server EX19-SERVER -RemoteIPRanges "0.0.0.0-255.255.255.255"
 ```
-> **Alterar**:
+
+> [!WARNING]
+> **Substituições necessárias:**
 > - `"Authenticated Connector"` → Nome desejado para o conector (Ex: "Conector Autenticado SMTP")
 > - `'0.0.0.0:587'` → IP e porta do seu servidor
 > - `EX19-SERVER` → Nome do seu servidor Exchange 2019
@@ -574,7 +583,9 @@ New-ReceiveConnector -Name "Authenticated Connector" -Usage Custom -Bindings '0.
 ```powershell
 Set-ReceiveConnector "Authenticated Connector" -AuthMechanism Tls,Basic,Integrated -PermissionGroups ExchangeUsers
 ```
-> **Alterar**:
+
+> [!WARNING]
+> **Substituição necessária:**
 > - `"Authenticated Connector"` → Use o mesmo nome definido no comando anterior
 
 5. **Adicionar Servidor Confiável**:
@@ -591,7 +602,9 @@ Get-ReceiveConnector | Add-ADPermission -User "NT AUTHORITY\ANONYMOUS LOGON" -Ex
 ```powershell
 Set-ADSiteLink -Identity "Default-First-Site-Link" -ReplicationInterval 15
 ```
-> **Alterar**:
+
+> [!WARNING]
+> **Substituição necessária:**
 > - `"Default-First-Site-Link"` → Nome do seu Site Link do Active Directory
 
 8. **Reiniciar Serviço**:
@@ -604,33 +617,36 @@ Restart-Service MSExchangeTransport
 Get-Service MSExchangeTransport | Format-List Name, Status, DisplayName
 ```
 
+```md
 ### 📩 Testes de Conectores via PowerShell
 
 1. **Teste com Autenticação**:
 ```powershell
 Send-MailMessage -From 'remetente@seudominio.com.br' -To 'destinatario@seudominio.com.br' -Subject 'Teste Auth' -smtpserver IP-DO-SERVIDOR -port 25 -usessl -credential pscredential
 ```
-> **Alterar**:
+
+> [!WARNING]
+> **Substituições necessárias:**
 > - `remetente@seudominio.com.br` → Email do remetente em seu domínio
 > - `destinatario@seudominio.com.br` → Email do destinatário
 > - `IP-DO-SERVIDOR` → IP do seu servidor Exchange
 > - `port 25` → Porta configurada (25 ou 587)
-
-> [!IMPORTANT]
+>
+> **Configurações importantes:**
 > - Use endereços de email válidos no seu domínio
 > - Configure credenciais antes do teste autenticado:
 >   - `$cred = Get-Credential`
-
 
 2. **Teste sem Autenticação**:
 ```powershell
 Send-MailMessage -From 'relay@seudominio.com.br' -To 'destinatario@seudominio.com.br' -Subject 'Teste Relay' -body 'Mensagem de Teste - Favor desconsiderar' -smtpserver IP-DO-SERVIDOR
 ```
-> **Alterar**:
+
+> [!WARNING]
+> **Substituições necessárias:**
 > - `relay@seudominio.com.br` → Email usado para relay
 > - `destinatario@seudominio.com.br` → Email do destinatário
 > - `IP-DO-SERVIDOR` → IP do seu servidor Exchange
-
 
 ### 📧 Verificação de Filas de Email
 
