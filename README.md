@@ -40,7 +40,7 @@ Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Ser
 - Transição suave entre versões do Exchange
 
 ## 🚨 Avisos Importantes Antes de Iniciar
-> **⚠️ ATENÇÃO**: 
+> [!WARNING]
 > - Sempre faça backup completo de todo o ambiente antes de iniciar
 > - Realize a migração em horário de baixo impacto
 > - Tenha um plano de rollback detalhado
@@ -132,7 +132,8 @@ Get-WindowsFeature | Where-Object {$_.Installed -eq $true} | Format-Table Name,I
 2. Extraia o arquivo ISO baixado
 3. Mantenha os arquivos em um local de fácil acesso
 
-> ⚠️ **IMPORTANTE**: Certifique-se de baixar a versão mais recente disponível no momento da instalação.
+> [!WARNING]\
+> Certifique-se de baixar a versão mais recente disponível no momento da instalação.
 
 ## 🔄 Preparação do Active Directory
 
@@ -161,7 +162,7 @@ Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAD /Organi
 Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAD
 ```
 
-> ⚠️ **IMPORTANTE**: 
+> [!IMPORTANT]
 > - O nome da organização não pode ser alterado depois de definido
 > - Use um nome sem espaços
 
@@ -173,10 +174,11 @@ Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAD
 Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAllDomains
 ```
 
-**Verificação**:
-- Aguarde a replicação do AD (pode levar várias horas)
-- Verifique os logs de instalação
-- Confirme as alterações no AD Sites and Services
+> [!NOTE]
+> **Verificação**:
+> - Aguarde a replicação do AD (pode levar várias horas)
+> - Verifique os logs de instalação
+> - Confirme as alterações no AD Sites and Services
 
 ## 📝 Instalação do Exchange
 
@@ -192,10 +194,11 @@ Setup.exe /IAcceptExchangeServerLicenseTerms_DiagnosticDataON /PrepareAllDomains
 6. Especifique o local de instalação
 7. Aguarde a conclusão da instalação
 
-**Verificações Pós-Instalação**:
-- Verifique o Event Viewer
-- Teste o acesso ao ECP (Exchange Control Panel)
-- Verifique os serviços do Exchange
+> [!NOTE]
+> **Verificações Pós-Instalação**:
+> - Verifique o Event Viewer
+> - Teste o acesso ao ECP (Exchange Control Panel)
+> - Verifique os serviços do Exchange
 
 ## 🔧  Verificação de Avisos MAPI
 Se você encontrar avisos relacionados ao MAPI over HTTP durante a instalação, siga estas etapas no servidor Exchange antigo 2016:
@@ -252,7 +255,7 @@ Após realizar todas as configurações no servidor Exchange antigo:
 ### 🔗 6.1. Configurar URLs Internas e Externas
 **Descrição**: Configuração dos endpoints de acesso para os diferentes serviços do Exchange.
 
-> ⚠️ **IMPORTANTE**: 
+> [!IMPORTANT]
 > - Substitua "EX01" pelo nome real do seu servidor
 > - Substitua "mail.techijack.live" pelo FQDN real do seu ambiente
 > - Certifique-se de que o certificado SSL cobre todos os FQDNs configurados
@@ -311,7 +314,7 @@ $Auto_Discover
 5. Escolha um local seguro e defina uma senha forte
 6. Salve o arquivo .pfx
 
-> ⚠️ **IMPORTANTE**: 
+> [!IMPORTANT]
 > - Mantenha a senha em local seguro
 > - Certifique-se de que o certificado não está expirado
 
@@ -332,10 +335,11 @@ $Auto_Discover
    - IMAP (se utilizado)
    - POP (se utilizado)
 
-**Verificação**:
-- Teste o acesso HTTPS aos serviços
-- Verifique o certificado no navegador
-- Confirme que não há alertas de certificado
+> [!NOTE]
+> **Verificação**:
+> - Teste o acesso HTTPS aos serviços
+> - Verifique o certificado no navegador
+> - Confirme que não há alertas de certificado
 
 ## 💾 Configuração de Armazenamento
 
@@ -361,7 +365,7 @@ Set-MailboxDatabase "DB-EX16-RH" –Name "DB-EX19-RH"
 Set-MailboxDatabase "DB-EX16-ADM" –Name "DB-EX19-ADM"
 ```
 
-> ⚠️ **IMPORTANTE**:
+> [!IMPORTANT]
 > - Substitua "DB-EX16-01", "DB-EX16-RH", "DB-EX16-ADM" pelos nomes reais dos seus bancos
 > - O novo padrão de nomenclatura usa:
 >     - DB: Database
@@ -379,7 +383,7 @@ Move-DatabasePath DB-EX19-RH -EdbFilePath E:\DB-EX19-RH\DB-EX19-RH.edb –LogFol
 Move-DatabasePath DB-EX19-ADM -EdbFilePath E:\DB-EX19-ADM\DB-EX19-ADM.edb –LogFolderPath F:\LOGS\DB-EX19-ADM
 ```
 
-> ⚠️ **IMPORTANTE**:
+> [!IMPORTANT]
 > 1. Estrutura dos diretórios:
 >      - Arquivos .edb:
 >        - `E:\DB-EX19-PROD\DB-EX19-PROD.edb`
@@ -420,7 +424,8 @@ Get-MailboxDatabase | Format-List Name, EdbFilePath, LogFolderPath
 
 ## 📦 Migração de Caixas de Correio Exchange
 
-> ⚠️ **Exemplo de Bancos de Dados**
+> [!NOTE]
+> **Exemplo de Bancos de Dados**
 >  - No exemplo abaixo, estamos migrando de:
 >    - `DB-EX16-01` (Banco 1 do Exchange 2016)
 >    - `DB-EX16-RH` (Banco 2 do Exchange 2016)
@@ -457,7 +462,7 @@ Get-Mailbox -Database "DB-EX16-ADM" -Arbitration |
 
 #### 2️⃣ Migração das Caixas de Correio de Usuários
 
-> **⚠️ IMPORTANTE**:
+> [!IMPORTANT]
 > 1. **Ordem de Migração**:
 >      - Primeiro: Caixas de arbitragem
 >      - Segundo: Caixas de usuários em lotes
@@ -611,10 +616,10 @@ Send-MailMessage -From 'remetente@seudominio.com.br' -To 'destinatario@seudomini
 > - `IP-DO-SERVIDOR` → IP do seu servidor Exchange
 > - `port 25` → Porta configurada (25 ou 587)
 
-> ⚠️ **IMPORTANTE**:
+> [!IMPORTANT]
 > - Use endereços de email válidos no seu domínio
 > - Configure credenciais antes do teste autenticado:
->   - $cred = Get-Credential
+>   - `$cred = Get-Credential`
 
 
 2. **Teste sem Autenticação**:
