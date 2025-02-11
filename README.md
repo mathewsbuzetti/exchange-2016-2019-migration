@@ -1,7 +1,8 @@
 # 🔄 Migração do Exchange Server 2016 para Exchange Server 2019
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Mathews_Buzetti-blue)](https://www.linkedin.com/in/mathewsbuzetti)
-[![Azure](https://img.shields.io/badge/Microsoft-Exchange_Server-orange)]()
+![Exchange](https://img.shields.io/badge/Exchange-2019-orange?style=flat-square)
 [![Status](https://img.shields.io/badge/Status-Production-green)]()
+![Documentation](https://img.shields.io/badge/Documentation-Technical-blue?style=flat-square)
 
 ## 📋 Metadados
 Metadado | Descrição
