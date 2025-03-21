@@ -617,6 +617,22 @@ Restart-Service MSExchangeTransport
 Get-Service MSExchangeTransport | Format-List Name, Status, DisplayName
 ```
 
+## 🌐 Configuração do NAT no Firewall
+
+**Descrição**: Alteração das regras de NAT no firewall para direcionar o tráfego externo para o novo servidor Exchange 2019.
+
+> [!WARNING]
+> Esta etapa deve ser planejada com cuidado pois causa interrupção temporária do acesso externo ao Exchange. 
+> Recomenda-se executar durante janela de manutenção programada.
+
+**Procedimento**:
+1. Faça backup das configurações atuais do firewall
+2. Identifique todas as regras NAT relacionadas ao Exchange 2016
+3. Para cada regra, altere o IP de destino:
+   - De: [IP do servidor Exchange 2016]
+   - Para: [IP do servidor Exchange 2019]
+4. Atualize as políticas de segurança se necessário
+
 ### 📩 Testes de Conectores via PowerShell
 
 1. **Teste com Autenticação**:
@@ -679,22 +695,6 @@ Get-Queue | Where {$_.Status -eq "Retry"} | Format-List
 # Verificar filas paradas
 Get-Queue | Where {$_.Status -eq "Suspended"}
 ```
-
-## 🌐 Configuração do NAT no Firewall
-
-**Descrição**: Alteração das regras de NAT no firewall para direcionar o tráfego externo para o novo servidor Exchange 2019.
-
-> [!WARNING]
-> Esta etapa deve ser planejada com cuidado pois causa interrupção temporária do acesso externo ao Exchange. 
-> Recomenda-se executar durante janela de manutenção programada.
-
-**Procedimento**:
-1. Faça backup das configurações atuais do firewall
-2. Identifique todas as regras NAT relacionadas ao Exchange 2016
-3. Para cada regra, altere o IP de destino:
-   - De: [IP do servidor Exchange 2016]
-   - Para: [IP do servidor Exchange 2019]
-4. Atualize as políticas de segurança se necessário
 
 ## 🗑️ Desinstalação do Exchange Server
 
