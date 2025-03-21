@@ -667,33 +667,114 @@ Get-Queue | Where {$_.Status -eq "Retry"} | Format-List
 Get-Queue | Where {$_.Status -eq "Suspended"}
 ```
 
-## ✅ Testes Finais
+## 🗑️ Desinstalação do Exchange Server
 
-### 🔍 Microsoft Remote Connectivity Analyzer
-Acesse: https://testconnectivity.microsoft.com/
+Após a migração completa para o Exchange 2019 e a verificação adequada de todas as filas de email, o próximo passo é a remoção segura do Exchange Server antigo.
 
-### 1️⃣ Testes de Conectividade Outlook
-- [ ] Outlook Autodiscover
-- [ ] Outlook Web Access
-- [ ] ActiveSync
-- [ ] Exchange Web Services
+> [!WARNING]
+> - Certifique-se de que todas as caixas de correio foram migradas
+> - Verifique se não há dependências no servidor antigo
 
-### 2️⃣ Testes de Email
-- [ ] SMTP (envio/recebimento)
-- [ ] Fluxo de email interno
-- [ ] Fluxo de email externo
-- [ ] Verificação de filas
+### 📋 1. Verificação Inicial de Bancos de Dados
 
-### 3️⃣ Testes de Acesso
-- [ ] Login OWA (https://mail.seudominio.com/owa)
-- [ ] Login ECP (https://mail.seudominio.com/ecp)
-- [ ] Conexão Outlook desktop
-- [ ] Conexão dispositivos móveis
+#### 1.1. Listar Bancos de Dados
+**Descrição**: Identificar todos os bancos de dados existentes no servidor Exchange antigo.
 
-### 4️⃣ Verificações SSL/TLS
-- [ ] Validar certificados
-- [ ] Verificar avisos de segurança
-- [ ] Testar todas as URLs publicadas
+**Procedimento**:
+```powershell
+# Listar todos os bancos de dados
+Get-MailboxDatabase | Format-Table Name, Server, MountStatus
+
+# Obter informações detalhadas
+Get-MailboxDatabase | Format-List Name, ServerName, EdbFilePath, LogFolderPath, MountStatus
+```
+
+### 💾 2. Desmontagem e Remoção de Bancos de Dados
+
+#### 2.1. Desmontar Bancos de Dados
+**Descrição**: Desmontar todos os bancos de dados antes da remoção.
+
+**Procedimento**:
+```powershell
+# Desmontar banco de dados específico
+Dismount-Database "NomeDoBanco" -Confirm:$false
+
+# Desmontar todos os bancos de dados do servidor
+Get-MailboxDatabase -Server "NomeDoServidor" | Dismount-Database -Confirm:$false
+```
+
+#### 2.2. Remover Bancos de Dados
+**Descrição**: Remover os bancos de dados do servidor Exchange.
+
+**Procedimento**:
+```powershell
+# Remover banco de dados específico
+Remove-MailboxDatabase "NomeDoBanco" -Confirm:$false
+
+# Remover todos os bancos de dados do servidor
+Get-MailboxDatabase -Server "NomeDoServidor" | Remove-MailboxDatabase -Confirm:$false
+```
+
+> [!WARNING]
+> Em caso de erros na remoção de bancos de dados:
+> - Verifique se não há caixas de correio ativas
+> - Verifique se o banco está realmente desmontado
+> - Se o banco estiver corrompido, considere usar o parâmetro `-RemoveBrokenDatabaseCopies` (se disponível na sua versão)
+> - Como último recurso, use o ADSIEdit para remover referências a bancos de dados problemáticos
+
+### 🧹 3. Remover Banco Manual usando ADSIEdit (se necessário)
+
+Se houver problemas na desinstalação ou referências remanescentes no Active Directory, pode ser necessário usar o ADSIEdit para limpeza manual.
+
+#### 3.1. Remover Manualmente Bancos de Dados Problemáticos
+**Descrição**: Usar o ADSIEdit para remover referências a bancos de dados que não podem ser excluídos pelos comandos normais.
+
+**Procedimento**:
+1. Abra o ADSIEdit (Execute `adsiedit.msc` no prompt de comando)
+2. Conecte-se a "Configuração"
+3. Navegue para: 
+   ```
+   CN=Configuration > CN=Services > CN=Microsoft Exchange > CN=SuaOrganização > CN=Databases
+   ```
+4. Localize o objeto CN=Mailbox Database (ex: CN=DB01)
+5. Clique com o botão direito e selecione Excluir
+
+### 🖥️ 4. Desinstalar o Exchange Server
+**Descrição**: Desinstalar o software Exchange Server através do Painel de Controle.
+
+**Procedimento**:
+1. Abra o Painel de Controle > Programas e Recursos
+2. Localize "Microsoft Exchange Server 2016"
+3. Selecione e clique em "Desinstalar"
+4. Siga as instruções do assistente de desinstalação
+5. Reinicie o servidor após a conclusão
+
+![Desinstalação do Exchange Server via Painel de Controle](https://github.com/user-attachments/assets/15462d67-2b43-425d-80ce-885df00017a0)
+
+> [!NOTE]
+> A imagem acima mostra a tela de desinstalação do Exchange Server 2016 através do Painel de Controle do Windows.
+
+### 🔄 5. Remover o Servidor do Domínio
+**Descrição**: Após a desinstalação do Exchange 2016, remover o servidor do domínio para completar a limpeza.
+
+**Procedimento**:
+1. Abra as Propriedades do Sistema:
+   - Clique com o botão direito em "Este Computador"
+   - Selecione "Propriedades"
+   - Clique em "Alterar configurações" na seção de nome do computador
+   
+2. Na janela de Propriedades do Sistema:
+   - Clique na aba "Nome do Computador"
+   - Clique no botão "Alterar..."
+
+3. Na janela "Alterações de Nome/Domínio do Computador":
+   - Na seção "Membro de", selecione a opção "Grupo de Trabalho"
+   - Digite um nome para o grupo de trabalho (exemplo: "WORKGROUP")
+   - Clique em "OK"
+
+4. Forneça as credenciais de administrador do domínio quando solicitado
+
+5. Confirme a remoção do domínio e reinicie o servidor quando solicitado
 
 ## 🔄 Versionamento
 
