@@ -759,7 +759,9 @@ Se houver problemas na desinstalação ou referências remanescentes no Active D
 **Descrição**: Usar o ADSIEdit para remover referências a bancos de dados que não podem ser excluídos pelos comandos normais.
 
 **Procedimento**:
-1. Abra o ADSIEdit (Execute `adsiedit.msc` no prompt de comando)
+1. Abra o ADSIEdit:
+   - Pressione `Windows + R` para abrir a caixa de diálogo Executar
+   - Digite `adsiedit.msc` e pressione Enter
 2. Conecte-se a "Configuração"
 3. Navegue para: 
    ```
