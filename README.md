@@ -10,7 +10,7 @@ Metadado | Descrição
 | **Título** | Migração do Exchange Server 2016 para Exchange Server 2019
 | **Assunto** | Microsoft Exchange Server
 | **Versão** | 1.0.0 |
-| **Data** | 10/02/2025
+| **Data** | 21/03/2025
 | **Autor** | Mathews Buzetti
 | **Tags** | `exchange-server`, `email-migration`, `windows-server`, `active-directory`, `infrastructure-migration`
 
@@ -684,9 +684,6 @@ Após a migração completa para o Exchange 2019 e a verificação adequada de t
 ```powershell
 # Listar todos os bancos de dados
 Get-MailboxDatabase | Format-Table Name, Server, MountStatus
-
-# Obter informações detalhadas
-Get-MailboxDatabase | Format-List Name, ServerName, EdbFilePath, LogFolderPath, MountStatus
 ```
 
 ### 💾 2. Desmontagem e Remoção de Bancos de Dados
@@ -779,4 +776,4 @@ Se houver problemas na desinstalação ou referências remanescentes no Active D
 ## 🔄 Versionamento
 
 - Versão: 1.0.0
-- Última atualização: 10/02/2025
+- Última atualização: 21/03/2025
