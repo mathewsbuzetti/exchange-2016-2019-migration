@@ -32,9 +32,10 @@ Metadado | Descrição
 14. [Migração de Caixas de Correio Exchange](#-migração-de-caixas-de-correio-exchange)
 15. [Configuração de Conectore](#-configuração-de-conectores)
 16. [Configuração do NAT no Firewall](#-configuração-do-nat-no-firewall)
-17. [Verificação de Filas](#-verificação-de-filas)
-18. [Desinstalação do Exchange Server](#-desinstalação-do-exchange-server)
-19. [Versionamento](#-versionamento)
+17. [Testes de Conectores via PowerShell](#-Testes-de-Conectores-via-PowerShell)
+19. [Verificação de Filas de Email](#-Verificação-de-Filas-de-Email)
+20. [Desinstalação do Exchange Server](#-desinstalação-do-exchange-server)
+21. [Versionamento](#-versionamento)
 
 ## 🎯 Objetivo
 Este guia fornece um roteiro detalhado para migração do Microsoft Exchange Server 2016 para o Exchange Server 2019. O processo de migração é crítico e requer planejamento cuidadoso para garantir:
