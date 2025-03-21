@@ -34,7 +34,7 @@ Metadado | Descrição
 16. [Configuração do NAT no Firewall](#-configuração-do-nat-no-firewall)
 17. [Testes de Conectores via PowerShell](#-Testes-de-Conectores-via-PowerShell)
 19. [Verificação de Filas de Email](#-Verificação-de-Filas-de-Email)
-20. [Desinstalação do Exchange Server](#-desinstalação-do-exchange-server)
+20. [Desinstalação do Exchange Server](#️-desinstalação-do-exchange-server)
 21. [Versionamento](#-versionamento)
 
 ## 🎯 Objetivo
