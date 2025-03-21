@@ -131,7 +131,7 @@ Install-WindowsFeature NET-Framework-45-Features, RPC-over-HTTP-proxy, RSAT-Clus
 Get-WindowsFeature | Where-Object {$_.Installed -eq $true} | Format-Table Name,InstallState
 ```
 ## 📦 Download do Exchange
-**Descrição**: O Exchange Server 2019 CU14 é a versão que será utilizada nesta instalação.
+**Descrição**: O Exchange Server 2019 CU15 é a versão que será utilizada nesta instalação.
 
 **Procedimento**:
 1. Download: [Exchange 2019 CU15](https://www.microsoft.com/en-us/download/details.aspx?id=106402)
