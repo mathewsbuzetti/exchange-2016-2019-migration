@@ -748,7 +748,6 @@ Get-MailboxDatabase -Server "NomeDoServidor" | Remove-MailboxDatabase -Confirm:$
 > Em caso de erros na remoção de bancos de dados:
 > - Verifique se não há caixas de correio ativas
 > - Verifique se o banco está realmente desmontado
-> - Se o banco estiver corrompido, considere usar o parâmetro `-RemoveBrokenDatabaseCopies` (se disponível na sua versão)
 > - Como último recurso, use o ADSIEdit para remover referências a bancos de dados problemáticos
 
 ### 🧹 3. Remover Banco Manual usando ADSIEdit (se necessário)
