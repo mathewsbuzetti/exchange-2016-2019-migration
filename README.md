@@ -134,7 +134,7 @@ Get-WindowsFeature | Where-Object {$_.Installed -eq $true} | Format-Table Name,I
 **Descrição**: O Exchange Server 2019 CU14 é a versão que será utilizada nesta instalação.
 
 **Procedimento**:
-1. Download: [Exchange 2019 CU14](https://www.microsoft.com/pt-br/download/details.aspx?id=105878)
+1. Download: [Exchange 2019 CU15](https://www.microsoft.com/en-us/download/details.aspx?id=106402)
 2. Extraia o arquivo ISO baixado
 3. Mantenha os arquivos em um local de fácil acesso
 
